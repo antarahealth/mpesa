@@ -77,6 +77,10 @@ class STKPush{
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
+
+        if(empty($body['PartyA'])){
+            $body['PartyA'] = $body['PhoneNumber'];
+        }
         
         // Validate $body based on the daraja docs.
         $validationResponse = $this->validateRequestParams($body);

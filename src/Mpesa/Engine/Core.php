@@ -94,7 +94,7 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makePostRequest($options = []){
-        $response = $this->engine->client->request('POST', $options['endpoint'], [
+        $response = $this->client->request('POST', $options['endpoint'], [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->auth->authenticate(),
                 'Content-Type'  => 'application/json',
@@ -113,7 +113,7 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makeGetRequest($options = []){
-        return $this->engine->client->request('GET', $options['endpoint'], [
+        return $this->client->request('GET', $options['endpoint'], [
             'headers' => [
                 'Authorization' => 'Basic ' . $options['token'],
                 'Content-Type'  => 'application/json',
