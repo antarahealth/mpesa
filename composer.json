@@ -1,0 +1,62 @@
+{
+    "name": "kabangi/mpesa",
+    "description": "M-Pesa API implementation",
+    "type": "library",
+    "keywords": ["mpesa", "safaricom", "laravel", "transactions", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SmoDav",
+            "email": "smodavprivate@gmail.com"
+        },
+        {
+            "name": "Kabangi",
+            "email": "kabangijulius@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/Mpesa/Support/helpers.php",
+            "src/Mpesa/Support/constants.php"
+        ],
+        "psr-4": {
+            "Kabangi\\Mpesa\\": "src/Mpesa/"
+        }
+    },
+     "autoload-dev": {
+        "psr-4": {
+            "Kabangi\\Mpesa\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kabangi\\Mpesa\\Laravel\\ServiceProvider"
+            ],
+            "aliases": {
+                "STKPush": "Kabangi\\Mpesa\\Laravel\\Facades\\STKPush",
+                "STKStatusQuery": "Kabangi\\Mpesa\\Laravel\\Facades\\STKStatusQuery",
+                "C2BRegister": "Kabangi\\Mpesa\\Laravel\\Facades\\C2BRegister",
+                "C2BSimulate": "Kabangi\\Mpesa\\Laravel\\Facades\\C2BSimulate",
+                "AccountBalance": "Kabangi\\Mpesa\\Laravel\\Facades\\ABBalance",
+                "B2CPay": "Kabangi\\Mpesa\\Laravel\\Facades\\B2CPay",
+                "B2BPay": "Kabangi\\Mpesa\\Laravel\\Facades\\B2BPay",
+                "TransactionStatus": "Kabangi\\Mpesa\\Laravel\\Facades\\TransactionStatus",
+                "Reversal": "Kabangi\\Mpesa\\Laravel\\Facades\\Reversal"
+            }
+        }
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "illuminate/support": "^5.0",
+        "nesbot/carbon": "~1.21",
+        "predis/predis": "^1.1",
+        "siriusphp/validation": "^2.2"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master",
+        "phpunit/phpunit": "~5.7|~6.2"
+    },
+    "minimum-stability": "stable"
+}
