@@ -11,6 +11,18 @@ class Reversal {
 
     protected $engine;
 
+    protected $validationRules = [
+        'Initiator:Initiator' => 'required()({label} is required) | number',
+        'SecurityCredential:SecurityCredential' => 'required()({label} is required)',
+        'CommandID:CommandID' => 'required()({label} is required)',
+        'RecieverIdentifierType:RecieverIdentifierType' => 'required()({label} is required)',
+        'Remarks:Remarks' => 'required()({label} is required)',
+        'PartyA:Party A' => 'required()({label} is required)',
+        'QueueTimeOutURL:QueueTimeOutURL' => 'required()({label} is required)',
+        'ResultURL:ResultURL' => 'required()({label} is required)',
+        'TransactionID:TransactionID' => 'required()({label} is required)',
+    ];
+
     /**
      * Reversal constructor.
      *
@@ -20,6 +32,7 @@ class Reversal {
     {
         $this->engine       = $engine;
         $this->endpoint = EndpointsRepository::build(MPESA_REVERSAL);
+        $this->engine->addValidationRules($this->validationRules);
     }
 
     /**
@@ -32,6 +45,12 @@ class Reversal {
      * @throws \Exception
      */
     public function submit($params = []){
+        // Make sure all the indexes are in Uppercases as shown in docs
+        $userParams = [];
+        foreach ($params as $key => $value) {
+            $userParams[ucwords($key)] = $value;
+        }
+ 
         $shortCode = $this->engine->config->get('mpesa.reversal.short_code');
         $successCallback  = $this->engine->config->get('mpesa.reversal.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.reversal.timeout_url');
@@ -43,18 +62,23 @@ class Reversal {
         // TODO: Compute
         $identifierType = '4';
 
-        $body = [
+        $configParams = [
             'Initiator'              => $initiator,
             'SecurityCredential'     => $securityCredential,
             'CommandID'              => $commandId,
             'PartyA'                 => $shortCode,
             'RecieverIdentifierType' => $identifierType,
-            'Remarks'                => $description,
             'QueueTimeOutURL'        => $timeoutCallback,
-            'ResultURL'              => $successCallback,
-            'TransactionID'          => $number
+            'ResultURL'              => $successCallback
         ];
 
+        // This gives precedence to params coming from user allowing them to override config params
+        $body = array_merge($configParams,$userParams);
+        // Validate $body based on the daraja docs.
+        $validationResponse = $this->engine->validateParams($body);
+        if($validationResponse !== true){
+            return $validationResponse;
+        }
         try {
             return $this->engine->makePostRequest([
                 'endpoint' => $this->endpoint,

@@ -22,16 +22,17 @@ class Simulate
     protected $endpoint;
 
     /**
-     * The short code to register callbacks for.
-     *
-     * @var string
-     */
-    protected $shortCode;
-
-    /**
      * @var Core
      */
     private $engine;
+
+    protected $validationRules = [
+        'ShortCode:ShortCode' => 'required()({label} is required)',
+        'CommandID:CommandID' => 'required()({label} is required)',
+        'Msisdn:Msisdn' => 'required()({label} is required)',
+        'Amount:Amount' => 'required()({label} is required)',
+        'BillRefNumber:BillRefNumber' => 'required()({label} is required)'
+    ];
 
     /**
      * Registrar constructor.
@@ -42,35 +43,43 @@ class Simulate
     {
         $this->engine   = $engine;
         $this->endpoint = EndpointsRepository::build(MPESA_C2B_SIMULATE);
+        $this->engine->addValidationRules($this->validationRules);
     }
 
     /**
      * Initiate the simulation process.
      *
-     * @param null $shortCode
-     * @param null $confirmationURL
-     * @param null $validationURL
-     * @param null $onTimeout
      *
      * @return mixed
      *
      * @throws \Exception
      */
     public function submit($params = []){
+        // Make sure all the indexes are in Uppercases as shown in docs
+        $userParams = [];
+        foreach ($params as $key => $value) {
+            $userParams[ucwords($key)] = $value;
+        }
+
         $shortCode = $this->engine->config->get('mpesa.c2b.short_code');
         $isSandbox = $this->engine->config->get('mpesa.is_sandbox');
         if($isSandbox === true){
             // Simulate using the test phone number otherwise it won't work.
-            $number = $this->engine->config->get('mpesa.c2b.test_phone_number');
+            $userParams['Msisdn'] = $this->engine->config->get('mpesa.c2b.test_phone_number');
         }
 
-        $body = [
+        $configParams = [
             'CommandID'         => 'CustomerPayBillOnline',
-            'Amount'            => intval($amount),
-            'Msisdn'            => $number,
-            'BillRefNumber'     => (string) $reference,
             'ShortCode'         => intval($shortCode),
         ];
+
+        // This gives precedence to params coming from user allowing them to override config params
+        $body = array_merge($configParams,$userParams);
+        // Validate $body based on the daraja docs.
+        $validationResponse = $this->engine->validateParams($body);
+        if($validationResponse !== true){
+            return $validationResponse;
+        }
 
         try {
             return $this->engine->makePostRequest([
@@ -82,16 +91,7 @@ class Simulate
                $exception->getResponse()->getReasonPhrase() :
                $exception->getMessage();
 
-            throw $this->generateException($message);
+            throw new \Exception($message);;
         }
-    }
-
-    /**
-     * @param $getReasonPhrase
-     *
-     * @return \Exception
-     */
-    private function generateException($getReasonPhrase){
-        return new \Exception($getReasonPhrase);
     }
 }

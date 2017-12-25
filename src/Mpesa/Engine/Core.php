@@ -86,6 +86,28 @@ class Core
         $this->client = $client;
     }
 
+    public function addValidationRules($rules){
+        foreach($rules as $key => $value){
+            $this->validator->add($key,$value);
+        }
+    }
+
+    public function validateParams($params){
+        if ($this->validator->validate($params)) {
+            return true;
+        }else{
+            $errors = $this->validator->getMessages();
+            $finalErrors = [];
+            foreach($errors as $err){
+                foreach($err as $er){
+                    $finalErrors[] = $er->__toString();
+                }
+                
+            }
+            return $finalErrors;
+        }
+    }
+
     /**
     * Make a post request
     *

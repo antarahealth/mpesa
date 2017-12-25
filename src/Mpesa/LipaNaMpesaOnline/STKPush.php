@@ -14,17 +14,17 @@ class STKPush{
     protected $engine;
 
     protected $validationRules = [
-        'BusinessShortCode' => 'required | number',
-        'Password' => 'required',
-        'Timestamp' => 'required',
-        'TransactionType' => 'required',
-        'Amount' => 'required | number',
-        'PartyA' => 'required',
-        'PartyB' => 'required',
-        'PhoneNumber' => 'required',
-        'CallBackURL' => 'required | website',
-        'AccountReference' => 'required',
-        'TransactionDesc' => 'required'
+        'BusinessShortCode:BusinessShortCode' => 'required()({label} is required) | number',
+        'Password:Password' => 'required()({label} is required)',
+        'Timestamp:Timestamp' => 'required()({label} is required)',
+        'TransactionType:TransactionType' => 'required()({label} is required)',
+        'Amount:Amount' => 'required()({label} is required) | number()({label} should be a numeric value)',
+        'PartyA:Party A' => 'required()({label} is required)',
+        'PartyB:PartyB' => 'required()({label} is required)',
+        'PhoneNumber:PhoneNumber' => 'required()({label} is required)',
+        'CallBackURL:CallBackURL' => 'required()({label} is required) | website',
+        'AccountReference:AccountReference' => 'required()({label} is required)',
+        'TransactionDesc:TransactionDesc' => 'required()({label} is required)'
     ];
 
     /**
@@ -36,16 +36,9 @@ class STKPush{
     {
         $this->engine       = $engine;
         $this->pushEndpoint = EndpointsRepository::build(MPESA_STK_PUSH);
-        $this->engine->validator->add($this->validationRules);
+        $this->engine->addValidationRules($this->validationRules);
     }
-
-    private function validateRequestParams($params){
-        if ($this->engine->validator->validate($params)) {
-            return true;
-        }else{
-            return json_encode($this->engine->validator->getMessages());
-        }
-    }
+    
 
     /**
      * Initiate STK push request
@@ -77,15 +70,14 @@ class STKPush{
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-
-        if(empty($body['PartyA'])){
+        if(empty($body['PartyA']) && !empty($body['PhoneNumber'])){
             $body['PartyA'] = $body['PhoneNumber'];
         }
         
         // Validate $body based on the daraja docs.
-        $validationResponse = $this->validateRequestParams($body);
+        $validationResponse = $this->engine->validateParams($body);
         if($validationResponse !== true){
-            throw new Exception($validationResponse);
+            return $validationResponse;
         }
 
         try {

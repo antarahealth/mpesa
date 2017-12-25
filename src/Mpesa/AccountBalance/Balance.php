@@ -12,6 +12,19 @@ class Balance {
     
     protected $engine;
 
+    protected $validationRules = [
+        'Initiator:Initiator' => 'required()({label} is required)',
+        'SecurityCredential:SecurityCredential' => 'required()({label} is required)',
+        'CommandID:CommandID' => 'required()({label} is required)',
+        'PartyA:PartyA' => 'required()({label} is required)',
+        'IdentifierType:IdentifierType' => 'required()({label} is required)',
+        'Remarks:Remarks' => 'required()({label} is required)',
+        'QueueTimeOutURL:QueueTimeOutURL' => 'required()({label} is required)',
+        'PhoneNumber:PhoneNumber' => 'required()({label} is required)',
+        'CallBackURL:CallBackURL' => 'required()({label} is required) | website',
+        'ResultURL:ResultURL' => 'required()({label} is required)'
+    ];
+
     /**
      * STK constructor.
      *
@@ -21,6 +34,7 @@ class Balance {
     {
         $this->engine       = $engine;
         $this->pushEndpoint = EndpointsRepository::build(MPESA_ACCOUNT_BALANCE);
+        $this->engine->addValidationRules($this->validationRules);
     }
 
     /**
@@ -32,7 +46,13 @@ class Balance {
      *
      * @throws \Exception
      */
-    public function submit($description = null){
+    public function submit($params = []){
+         // Make sure all the indexes are in Uppercases as shown in docs
+        $userParams = [];
+        foreach ($params as $key => $value) {
+             $userParams[ucwords($key)] = $value;
+        }
+
         $shortCode = $this->engine->config->get('mpesa.account_balance.short_code');
         $successCallback  = $this->engine->config->get('mpesa.account_balance.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.account_balance.timeout_url');
@@ -44,7 +64,7 @@ class Balance {
         // TODO: Compute
         $identifierType = '4';
 
-        $body = [
+        $configParams = [
             'Initiator'     => $initiator,
             'SecurityCredential'=> $securityCredential,
             'CommandID'         => $commandId,
@@ -54,6 +74,15 @@ class Balance {
             'QueueTimeOutURL'   => $timeoutCallback,
             'ResultURL'         => $successCallback,
         ];
+
+        // This gives precedence to params coming from user allowing them to override config params
+        $body = array_merge($configParams,$userParams);
+
+        // Validate $body based on the daraja docs.
+        $validationResponse = $this->engine->validateParams($body);
+        if($validationResponse !== true){
+            return $validationResponse;
+        }
 
         try {
             return $this->engine->makePostRequest([

@@ -23,37 +23,16 @@ class Register
     protected $endpoint;
 
     /**
-     * The short code to register callbacks for.
-     *
-     * @var string
-     */
-    protected $shortCode;
-
-    /**
-     * The validation callback.
-     *
-     * @var
-     */
-    protected $validationURL;
-
-    /**
-     * The confirmation callback.
-     *
-     * @var
-     */
-    protected $confirmationURL;
-
-    /**
-     * The status of the request in case a timeout occurs.
-     *
-     * @var string
-     */
-    protected $onTimeout = 'Completed';
-
-    /**
      * @var Core
      */
     private $engine;
+
+    protected $validationRules = [
+        'ShortCode:ShortCode' => 'required()({label} is required)',
+        'ResponseType:ResponseType' => 'required()({label} is required)',
+        'ConfirmationURL:ConfirmationURL' => 'required()({label} is required)',
+        'ValidationURL:ValidationURL' => 'required()({label} is required)'
+    ];
 
     /**
      * Registrar constructor.
@@ -64,36 +43,42 @@ class Register
     {
         $this->engine   = $engine;
         $this->endpoint = EndpointsRepository::build(MPESA_C2B_REGISTER);
+        $this->engine->addValidationRules($this->validationRules);
     }
 
     /**
      * Initiate the registration process.
-     *
-     * @param null $shortCode
-     * @param null $confirmationURL
-     * @param null $validationURL
-     * @param null $onTimeout
      *
      * @return mixed
      *
      * @throws \Exception
      */
     public function submit($params = []){
+        // Make sure all the indexes are in Uppercases as shown in docs
+        $userParams = [];
+        foreach ($params as $key => $value) {
+            $userParams[ucwords($key)] = $value;
+        }
+
         $shortCode = $this->engine->config->get('mpesa.short_code');
         $confirmationURL   = $this->engine->config->get('mpesa.c2b.confirmation_url');
         $onTimeout   = $this->engine->config->get('mpesa.c2b.on_timeout');
         $validationURL   = $this->engine->config->get('mpesa.c2b.validation_url');
 
-        if ($onTimeout != 'Completed' && $onTimeout != 'Cancelled') {
-            throw new InvalidArgumentException('Invalid timeout argument. Use Completed or Cancelled');
-        }
-
-        $body = [
+        $configParams = [
             'ShortCode'       => $shortCode,
             'ResponseType'    => $onTimeout,
             'ConfirmationURL' => $confirmationURL,
             'ValidationURL'   => $validationURL
         ];
+
+        // This gives precedence to params coming from user allowing them to override config params
+        $body = array_merge($configParams,$userParams);
+        // Validate $body based on the daraja docs.
+        $validationResponse = $this->engine->validateParams($body);
+        if($validationResponse !== true){
+            return $validationResponse;
+        }
 
         try {
             return $this->engine->makePostRequest([
@@ -105,16 +90,7 @@ class Register
                $exception->getResponse()->getReasonPhrase() :
                $exception->getMessage();
 
-            throw $this->generateException($message);
+            throw new \Exception($message);
         }
-    }
-    
-    /**
-     * @param $getReasonPhrase
-     *
-     * @return \Exception
-     */
-    private function generateException($getReasonPhrase){
-        return new \Exception($getReasonPhrase);
     }
 }

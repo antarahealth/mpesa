@@ -7,12 +7,22 @@ use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Pay {
+
     protected $pushEndpoint;
+
     protected $engine;
-    protected $number;
-    protected $amount;
-    protected $reference;
-    protected $description;
+
+    protected $validationRules = [
+        'InitiatorName:InitiatorName' => 'required()({label} is required)',
+        'SecurityCredential:SecurityCredential' => 'required()({label} is required)',
+        'CommandID:CommandID' => 'required()({label} is required)',
+        'PartyA:PartyA' => 'required()({label} is required)',
+        'PartyB:PartyB' => 'required()({label} is required)',
+        'QueueTimeOutURL:QueueTimeOutURL' => 'required()({label} is required)',
+        'ResultURL:ResultURL' => 'required()({label} is required)',
+        'Remarks:Remarks' => 'required()({label} is required)',
+        'Amount:Amount' => 'required()({label} is required)'
+    ];
 
     /**
      * STK constructor.
@@ -23,6 +33,7 @@ class Pay {
     {
         $this->engine       = $engine;
         $this->pushEndpoint = EndpointsRepository::build(MPESA_B2C);
+        $this->engine->addValidationRules($this->validationRules);
     }
 
     /**
@@ -37,14 +48,12 @@ class Pay {
      * @throws \Exception
      */
     public function submit($params = []){
-        if (! starts_with($number, '2547')) {
-            throw new \InvalidArgumentException('The subscriber number must start with 2547');
+        // Make sure all the indexes are in Uppercases as shown in docs
+        $userParams = [];
+        foreach ($params as $key => $value) {
+            $userParams[ucwords($key)] = $value;
         }
-
-        if (!\is_numeric($amount)) {
-            throw new \InvalidArgumentException('The amount must be numeric');
-        }
-
+        
         $isSandbox = $this->engine->config->get('mpesa.is_sandbox');
         if($isSandbox === true){
             // Simulate using the test phone number otherwise it won't work.
@@ -59,7 +68,7 @@ class Pay {
         $securityCredential  = $this->engine->config->get('mpesa.b2c.security_credential');
         $commandId  = $this->engine->config->get('mpesa.b2c.default_command_id');
 
-        $body = [
+        $configParams = [
             'InitiatorName'     => $initiator,
             'SecurityCredential'=> $securityCredential,
             'CommandID'         => $commandId,
@@ -70,6 +79,14 @@ class Pay {
             'QueueTimeOutURL'   => $timeoutCallback,
             'ResultURL'         => $successCallback,
         ];
+
+        // This gives precedence to params coming from user allowing them to override config params
+        $body = array_merge($configParams,$userParams);
+        // Validate $body based on the daraja docs.
+        $validationResponse = $this->engine->validateParams($body);
+        if($validationResponse !== true){
+            return $validationResponse;
+        }
 
         try {
             return $this->engine->makePostRequest([
