@@ -13,7 +13,22 @@
 
 
 #### Using Laravel.
+```
+use STKPush;
 
+class CheckoutController{
+
+   public function checkout(){
+     STKPush::submit([
+      'amount' => 20,
+      'phoneNumber' => '254722000000',
+      'accountReference' => 'INVOICEID', 
+      'transactionDesc' => 'Payment for my service'
+     ]); 
+   }
+}
+
+```
 
 ### Known issues with this endpoint
 1. There exists some SIM cards that are not yet supported by this. All your requests to such SIM Cards will fail with `[STK DS timeout]`.
