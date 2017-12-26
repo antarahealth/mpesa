@@ -5,7 +5,9 @@
 
 ### How to consume LipaNaMpesaOnline(STK PUSH) endpoint with this package.
 #### Payment flow involved with this endpoint.
-
+1. Your system initiates the payment request on behalf of client and send it to safaricom.
+2. Safaricom sends the request to the client requesting them to authorize the transaction by entering their M-PESA PIN.
+3. If client enters their correct M-PESA PIN, safaricom respond to your sytem with details regarding the transaction. This is made possible by sending an internet accessible URL via a CallBackUrl.
 
 #### Using vanilla php
 
