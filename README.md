@@ -13,7 +13,7 @@ It implements all the exposed endpoints by Safaricom as listed below:-
 #### &nbsp; &nbsp; What it is?
 The Lipa na M-Pesa Online Payment endpoint(STK push) allows you to request payment from your users/clients. With this endpoint all the user is required to do is input their M-PESA pin to a prompt to send a payment to you. 
 #### &nbsp; &nbsp; How to implement it?
-[Read docs here](https://github.com/Kabangi/mpesa/edit/master/docs/LipaNaMpesaOnline.md).
+[Read docs here](docs/LipaNaMpesaOnline.md).
 
 ### 2. [Lipa na M-Pesa Online Query Request](https://developer.safaricom.co.ke/docs#lipa-na-m-pesa-online-query-request)
 #### &nbsp; &nbsp; What it is?
