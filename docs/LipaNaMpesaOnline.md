@@ -17,4 +17,4 @@
 
 ### Known issues with this endpoint
 1. There exists some SIM cards that are not yet supported by this. All your requests to such SIM Cards will fail with `[STK DS timeout]`.
-2. Making multiple requests to the same phone number causes the initial request to timeout and the STK Prompt to user not to respond to safaricom even though the user entered the correct M-PESA pin.
+2. Making multiple subsequent requests to the same phone number causes the initial request to timeout and the STK Prompt to user not to respond to safaricom even though the user entered the correct M-PESA pin.
