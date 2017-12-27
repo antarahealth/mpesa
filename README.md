@@ -142,7 +142,7 @@ https://github.com/SmoDav/mpesa
 ## Contributors
 Gratitudes goes to the following Ninjas for their help during my integration process and the things I had to learn along the way fom them or their code:-
 
-[<img src="https://avatars1.githubusercontent.com/u/8632600?s=400&u=24e47804b187e651c75c3defc65930ef4e719b79&v=4" width="100px;"/><br /><sub>Julius Kabangi</sub>](mailto::kabangijulius@gmail.com/) [<img src="https://avatars2.githubusercontent.com/u/2639600?s=400&v=4" width="100px;"/><br /><sub>David Mjomba</sub>](https://smodavproductions.com/) [<img src="https://avatars2.githubusercontent.com/u/2639600?s=400&v=4" width="100px;"/><br /><sub>David Mjomba</sub>](https://smodavproductions.com/)
+[<img src="https://avatars1.githubusercontent.com/u/8632600?s=400&u=24e47804b187e651c75c3defc65930ef4e719b79&v=4" width="100px;"/><br /><sub>Julius Kabangi</sub>](mailto::kabangijulius@gmail.com/) [<img src="https://avatars2.githubusercontent.com/u/2639600?s=400&v=4" width="100px;"/><br /><sub>David Mjomba</sub>](https://smodavproductions.com/)
 
 ## Support
 Need support using this package:- 
