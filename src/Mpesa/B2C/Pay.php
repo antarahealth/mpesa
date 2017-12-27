@@ -57,7 +57,7 @@ class Pay {
         $isSandbox = $this->engine->config->get('mpesa.is_sandbox');
         if($isSandbox === true){
             // Simulate using the test phone number otherwise it won't work.
-            $number = $this->engine->config->get('mpesa.b2c.test_phone_number');
+            $userParams['PartyB'] = $this->engine->config->get('mpesa.b2c.test_phone_number');
         }
 
         $shortCode = $this->engine->config->get('mpesa.b2c.short_code');
@@ -72,10 +72,7 @@ class Pay {
             'InitiatorName'     => $initiator,
             'SecurityCredential'=> $securityCredential,
             'CommandID'         => $commandId,
-            'Amount'            => $amount,
             'PartyA'            => $shortCode,
-            'PartyB'            => $number,
-            'Remarks'           => $description,
             'QueueTimeOutURL'   => $timeoutCallback,
             'ResultURL'         => $successCallback,
         ];
