@@ -136,7 +136,13 @@ echo json_encode($response);
 
 ## Inspiration
 
+This package was inspired by the work from smodav work on the following project:-
+https://github.com/SmoDav/mpesa
+
 ## Contributors
+Gratitudes goes to the following Ninjas for their help during my intergration process and the things I had to learn along the way:-
+
+| [<img src="https://avatars2.githubusercontent.com/u/2639600?s=400&v=4" width="100px;"/><br /><sub>David Mjomba</sub>](https://smodavproductions.com/) |
 
 ## Support
 
