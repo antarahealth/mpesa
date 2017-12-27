@@ -139,6 +139,7 @@ echo json_encode($response);
 ## Contributors
 
 ## Support
+https://join.slack.com/t/m-pesagroup/shared_invite/enQtMjkxNjczNzQyMTc4LTFjYjE5MDIxMzJjZDUyMDAzY2RmZjlhNDI3OGY1MWVhYTFkM2YzMmI2NjQ0NGM3M2EwMGVjM2E4NGU4MmIxYjA
 
 ## License
 
