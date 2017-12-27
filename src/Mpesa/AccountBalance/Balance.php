@@ -70,7 +70,6 @@ class Balance {
             'CommandID'         => $commandId,
             'PartyA'            => $shortCode,
             'IdentifierType'    => $identifierType,
-            'Remarks'           => $description,
             'QueueTimeOutURL'   => $timeoutCallback,
             'ResultURL'         => $successCallback,
         ];

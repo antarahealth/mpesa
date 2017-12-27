@@ -72,15 +72,11 @@ class Pay {
             'Initiator'             => $initiator,
             'SecurityCredential'        => $securityCredential,
             'CommandID'                 => $commandId,
-            'Amount'                    => $amount,
             'PartyA'                    => $shortCode,
-            'PartyB'                    => $number,
             'RecieverIdentifierType'    => $identifierType,
             'SenderIdentifierType'      => $senderIdentifierType,
-            'Remarks'                   => $description,
             'QueueTimeOutURL'           => $timeoutCallback,
             'ResultURL'                 => $successCallback,
-            'AccountReference'          => $reference
         ];
         
         // This gives precedence to params coming from user allowing them to override config params
