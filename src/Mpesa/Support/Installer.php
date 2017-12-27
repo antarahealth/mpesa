@@ -9,10 +9,21 @@ class Installer
     public static function install(Event $event)
     {
         $config    = __DIR__ . '/../../../config/mpesa.php';
+        $cert    = __DIR__ . '/../../../config/mpesa_public_cert.cer';
         $configDir = self::getConfigDirectory($event);
 
         if (! \is_file($configDir . '/mpesa.php')) {
             \copy($config, $configDir . '/mpesa.php');
+        }
+
+        // Copy mpesa config file
+        if (! \is_file($configDir . '/mpesa.php')) {
+            \copy($config, $configDir . '/mpesa.php');
+        }
+
+        // Copy certificate
+        if (! \is_file($configDir . '/mpesa_public_cert.cer')) {
+            \copy($cert, $configDir . '/mpesa_public_cert.cer');
         }
     }
 
