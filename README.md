@@ -105,7 +105,34 @@ Modify the config file where necessary to include your credentials
 
 ## Usage
 
-List all the endpoints here and link to the specific endpoint page
+### Raw PHP (Vanilla)
+```
+<?php
+require "vendor/autoload.php";
+
+use Kabangi\Mpesa\Native\Mpesa;
+
+$mpesa = new Mpesa();
+
+$response = $mpesa->STKPush([]);
+header('Content-Type: application/json');
+echo json_encode($response);
+
+// $mpesa->STKStatus([]);
+
+// $mpesa->C2BRegister([]);
+
+// $mpesa->C2BSimulate([]);
+
+// $mpesa->B2C([]);
+
+// $mpesa->accountBalance([]);
+
+// $mpesa->reversal([]);
+
+// $mpesa->transactionStatus([]);
+
+```
 
 ## Inspiration
 
