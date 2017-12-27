@@ -93,11 +93,14 @@ composer require kabangi/mpesa
 
 Publish the package config file by running the following command:
    `php artisan vendor:publish`
-This will add `mpesa.php` config file into config directory. Edit the file with the necessary values if you do not do this we will use the sandbox credentials automagically.
+This will add `mpesa.php` config file into config directory. 
+
+Edit the file with the necessary values if you do not do this we will use the sandbox credentials automagically.
 
 ### Raw PHP (Vanilla)
 
 If you followed the installation details you should have a config directory and `mpesa.php` file. 
+
 Modify the config file where necessary to include your credentials
 
 ## Usage
