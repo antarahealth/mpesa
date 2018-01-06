@@ -2,12 +2,11 @@
 
 namespace Kabangi\Mpesa\Reversal;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Reversal {
-    protected $endpoint;
+
+    protected $endpoint = 'mpesa/reversal/v1/request';
 
     protected $engine;
 
@@ -31,7 +30,6 @@ class Reversal {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->endpoint = EndpointsRepository::build(MPESA_REVERSAL);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -84,8 +82,8 @@ class Reversal {
                 'endpoint' => $this->endpoint,
                 'body' => $body
             ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
+        } catch (\Exception $exception) {
+            return \json_decode($exception->getMessage());
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Kabangi\Mpesa\Auth;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Exceptions\ErrorException;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
@@ -25,7 +24,7 @@ class Authenticator
     /**
      * @var string
      */
-    protected $endpoint;
+    protected $endpoint = 'oauth/v1/generate?grant_type=client_credentials';
 
     /**
      * @var Core
@@ -45,7 +44,6 @@ class Authenticator
     public function __construct(Core $core)
     {
         $this->engine   = $core;
-        $this->endpoint = EndpointsRepository::build(MPESA_AUTH);
         self::$instance = $this;
     }
 
@@ -68,10 +66,8 @@ class Authenticator
             $this->saveCredentials($body);
 
             return $body->access_token;
-        } catch (RequestException $exception) {
-            $message = $exception->getResponse() ?
-               $exception->getResponse()->getReasonPhrase() :
-               $exception->getMessage();
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
             
             throw $this->generateException($message);
         }

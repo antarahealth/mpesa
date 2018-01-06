@@ -2,7 +2,6 @@
 
 namespace Kabangi\Mpesa\Engine;
 
-use GuzzleHttp\ClientInterface;
 use Sirius\Validation\Validator;    
 use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Contracts\CacheStore;
@@ -34,14 +33,14 @@ class Core
     public static $instance;
 
     /**
-     * @var ClientInterface
-     */
-    public $client;
-
-    /**
      * @var Authenticator
      */
     public $auth;
+
+    /**
+     * @var string
+     */
+    public $baseUrl;
 
     /**
      * @var Validator
@@ -51,16 +50,14 @@ class Core
     /**
      * Core constructor.
      *
-     * @param ClientInterface    $client
      * @param ConfigurationStore $configStore
      * @param CacheStore         $cacheStore
      */
-    public function __construct(ClientInterface $client, ConfigurationStore $configStore, CacheStore $cacheStore)
+    public function __construct(ConfigurationStore $configStore, CacheStore $cacheStore)
     {
         $this->config = $configStore;
         $this->cache  = $cacheStore;
         $this->validator = new Validator();
-        $this->setClient($client);
 
         $this->initialize();
 
@@ -72,18 +69,19 @@ class Core
      */
     private function initialize()
     {
-        new EndpointsRepository($this->config);
+        $this->setBaseUrl();
         $this->auth = new Authenticator($this);
     }
 
     /**
-     * Set http client.
-     *
-     * @param ClientInterface $client
-     **/
-    public function setClient(ClientInterface $client)
-    {
-        $this->client = $client;
+     * Validate the current package state.
+     */
+    private function setBaseUrl(){
+        $apiRoot = $this->config->get('mpesa.apiUrl', '');
+        if (substr($apiRoot, strlen($apiRoot) - 1) !== '/') {
+            $apiRoot = $apiRoot . '/';
+        }
+        $this->baseUrl  = $apiRoot;
     }
 
     public function addValidationRules($rules){
@@ -109,6 +107,15 @@ class Core
     }
 
     /**
+     * Get current request time
+     * @return 
+     */
+    public function getCurrentRequestTime(){
+        $date = new \DateTime();
+        return $date->format('YmdHis');
+    }
+
+    /**
     * Make a post request
     *
     * @param Array $options
@@ -116,15 +123,39 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makePostRequest($options = []){
-        $response = $this->client->request('POST', $options['endpoint'], [
+        $response = $this->request('POST', $options['endpoint'], [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->auth->authenticate(),
                 'Content-Type'  => 'application/json',
             ],
-            'json' => $options['body'],
+            $options['body'],
         ]);
 
         return \json_decode($response->getBody());
+    }
+
+    private function request($method,$endpoint,$headers,$body){
+        $url = $this->baseUrl.$endpoint;
+        $ch = curl_init();
+        $options = [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 200,
+            CURLOPT_HTTPHEADER => $headers
+        ];
+
+        if($method === 'POST'){
+            $options[CURLOPT_POST] = true;
+            $options[CURLOPT_POSTFIELDS] = http_build_query($body);
+        }
+
+        curl_setopt_array($ch, $options);
+        if( ! $result = curl_exec($ch)) 
+        { 
+            trigger_error(curl_error($ch)); 
+        } 
+        curl_close($ch); 
+        return $result; 
     }
 
     /**
@@ -135,7 +166,7 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makeGetRequest($options = []){
-        return $this->client->request('GET', $options['endpoint'], [
+        return $this->request('GET', $options['endpoint'], [
             'headers' => [
                 'Authorization' => 'Basic ' . $options['token'],
                 'Content-Type'  => 'application/json',

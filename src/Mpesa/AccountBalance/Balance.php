@@ -2,13 +2,11 @@
 
 namespace Kabangi\Mpesa\AccountBalance;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Balance {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/accountbalance/v1/query';
     
     protected $engine;
 
@@ -33,7 +31,6 @@ class Balance {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_ACCOUNT_BALANCE);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -85,11 +82,11 @@ class Balance {
 
         try {
             return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
+                'endpoint' => $endpoint,
                 'body' => $body
             ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
+        } catch (\Exception $exception) {
+            return \json_decode($exception->getMessage());
         }
     }
 }

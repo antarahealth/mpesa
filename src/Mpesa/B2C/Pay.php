@@ -2,13 +2,11 @@
 
 namespace Kabangi\Mpesa\B2C;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Pay {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/b2c/v1/paymentrequest';
 
     protected $engine;
 
@@ -32,7 +30,6 @@ class Pay {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_B2C);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -87,11 +84,11 @@ class Pay {
 
         try {
             return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
+                'endpoint' => $this->endpoint,
                 'body' => $body
             ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
+        } catch (\Exception $exception) {
+            return \json_decode($exception->getMessage());
         }
     }
 }

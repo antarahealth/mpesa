@@ -2,13 +2,11 @@
 
 namespace Kabangi\Mpesa\LipaNaMpesaOnline;
 
-use Carbon\Carbon;
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class STKStatusQuery{
-    protected $pushEndpoint;
+
+    protected $endpoint = 'mpesa/stkpushquery/v1/query';
 
     protected $engine;
 
@@ -27,7 +25,6 @@ class STKStatusQuery{
     public function __construct(Core $engine)
     {
         $this->engine  = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_STK_PUSH_STATUS_QUERY);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -38,7 +35,7 @@ class STKStatusQuery{
             $userParams[ucwords($key)] = $value;
         }
 
-        $time      = Carbon::now()->format('YmdHis');
+        $time      = $this->engine->getCurrentRequestTime();
         $shortCode = $this->engine->config->get('mpesa.short_code');
         $passkey   = $this->engine->config->get('mpesa.lnmo.passkey');
         $password  = \base64_encode($shortCode . $passkey . $time);
@@ -61,11 +58,11 @@ class STKStatusQuery{
 
         try {
             return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
+                'endpoint' => $this->endpoint,
                 'body' => $body
             ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
+        } catch (\Exception $exception) {
+            return \json_decode($exception->getMessage());
         }
     }
 }

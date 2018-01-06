@@ -3,7 +3,6 @@
 namespace Kabangi\Mpesa\Tests\Unit;
 
 use Kabangi\Mpesa\Tests\TestCase;
-use GuzzleHttp\ClientInterface;
 use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Contracts\CacheStore;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
@@ -18,16 +17,6 @@ class CoreTest extends TestCase
     public function testAuthSet()
     {
         $this->assertInstanceOf(Authenticator::class, $this->engine->auth);
-    }
-
-    /**
-     * Test that the http client is set.
-     *
-     * @test
-     **/
-    public function testClientSet()
-    {
-        $this->assertInstanceOf(ClientInterface::class, $this->engine->client);
     }
 
     /**

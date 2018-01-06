@@ -2,13 +2,12 @@
 
 namespace Kabangi\Mpesa\TransactionStatus;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class TransactionStatus {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/transactionstatus/v1/query';
     
     protected $engine;
 
@@ -31,7 +30,6 @@ class TransactionStatus {
      */
     public function __construct(Core $engine){
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_TRANSACTION_STATUS);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -85,8 +83,8 @@ class TransactionStatus {
                 'endpoint' => $this->endpoint,
                 'body' => $body
             ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
+        } catch (\Exception $exception) {
+            return \json_decode($exception->getMessage());
         }
     }
 }

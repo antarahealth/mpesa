@@ -2,10 +2,6 @@
 
 namespace Kabangi\Mpesa\Tests\Unit;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Kabangi\Mpesa\Auth\Authenticator;
 use PHPUnit\Framework\TestCase;
 use Kabangi\Mpesa\Engine\Core;
@@ -41,13 +37,7 @@ class AuthenticatorTest extends TestCase
      **/
     public function testAuthentication()
     {
-        $mock = new MockHandler([
-            new Response(202, [], \json_encode(['access_token' => 'access', 'expires_in' => 3599])),
-        ]);
-
-        $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
-        $engine  = new Core($client, $this->config, $this->cache);
+        $engine  = new Core($this->config, $this->cache);
         $auth    = new Authenticator($engine);
         $token   = $auth->authenticate();
         $this->assertEquals('access', $token);
@@ -61,13 +51,7 @@ class AuthenticatorTest extends TestCase
     public function testAuthenticationFailure()
     {
         $this->expectException(ConfigurationException::class);
-        $mock = new MockHandler([
-            new Response(400, [], \json_encode([]), null, 'Bad Request: Invalid Credentials'),
-        ]);
-
-        $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
-        $engine  = new Core($client, $this->config, $this->cache);
+        $engine  = new Core($this->config, $this->cache);
         $auth    = new Authenticator($engine);
         $auth->authenticate();
     }

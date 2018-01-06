@@ -2,10 +2,8 @@
 
 namespace Kabangi\Mpesa\C2B;
 
-use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Simulate.
@@ -19,7 +17,7 @@ class Simulate
     /**
      * @var string
      */
-    protected $endpoint;
+    protected $endpoint = 'mpesa/c2b/v1/simulate';
 
     /**
      * @var Core
@@ -42,7 +40,6 @@ class Simulate
     public function __construct(Core $engine)
     {
         $this->engine   = $engine;
-        $this->endpoint = EndpointsRepository::build(MPESA_C2B_SIMULATE);
         $this->engine->addValidationRules($this->validationRules);
     }
 
@@ -87,9 +84,7 @@ class Simulate
                 'body' => $body
             ]);
         } catch (RequestException $exception) {
-            $message = $exception->getResponse() ?
-               $exception->getResponse()->getReasonPhrase() :
-               $exception->getMessage();
+            $message = $exception->getMessage();
 
             throw new \Exception($message);;
         }
