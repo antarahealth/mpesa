@@ -1,6 +1,5 @@
 # M-PESA API Package
 [![Build Status](https://travis-ci.org/Kabangi/mpesa.svg?branch=master)](https://travis-ci.org/Kabangi/mpesa)
-[![Total Downloads](https://poser.pugx.org/kabangi/mpesa/d/total.svg)](https://packagist.org/packages/kabangi/mpesa)
 [![Latest Stable Version](https://poser.pugx.org/kabangi/mpesa/v/stable.svg)](https://packagist.org/packages/kabangi/mpesa)
 [![Latest Unstable Version](https://poser.pugx.org/kabangi/mpesa/v/unstable.svg)](https://packagist.org/packages/kabangi/mpesa)
 [![License](https://poser.pugx.org/kabangi/mpesa/license.svg)](https://packagist.org/packages/kabangi/mpesa)
