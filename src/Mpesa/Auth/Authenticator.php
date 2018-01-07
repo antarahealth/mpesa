@@ -5,7 +5,6 @@ namespace Kabangi\Mpesa\Auth;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Exceptions\ErrorException;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Authenticator.
@@ -56,16 +55,15 @@ class Authenticator
      */
     public function authenticate()
     {
-        if ($token = $this->engine->cache->get(self::AC_TOKEN)) {
-            return $token;
-        }
+        // if ($token = $this->engine->cache->get(self::AC_TOKEN)) {
+        //     return $token;
+        // }
 
         try {
             $response = $this->makeRequest();
-            $body     = \json_decode($response->getBody());
-            $this->saveCredentials($body);
+            /// $this->saveCredentials($response);
 
-            return $body->access_token;
+            return $response->access_token;
         } catch (\Exception $exception) {
             $message = $exception->getMessage();
             
@@ -99,7 +97,6 @@ class Authenticator
     {
         $key    = $this->engine->config->get('mpesa.consumer_key');
         $secret = $this->engine->config->get('mpesa.consumer_secret');
-
         return \base64_encode($key . ':' . $secret);
     }
 

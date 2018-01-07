@@ -2,11 +2,10 @@
 
 namespace Kabangi\Mpesa\Engine;
 
-use Sirius\Validation\Validator;    
+use Kabangi\Mpesa\Validation\Validator;    
 use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Contracts\CacheStore;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Core.
@@ -125,37 +124,36 @@ class Core
     public function makePostRequest($options = []){
         $response = $this->request('POST', $options['endpoint'], [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->auth->authenticate(),
-                'Content-Type'  => 'application/json',
+                'Authorization: Bearer ' . $this->auth->authenticate(),
+                'Content-Type: application/json',
             ],
-            $options['body'],
+            'body' => $options['body'],
         ]);
 
-        return \json_decode($response->getBody());
+        return $response;
     }
 
-    private function request($method,$endpoint,$headers,$body){
+    private function request($method,$endpoint,$params){
         $url = $this->baseUrl.$endpoint;
         $ch = curl_init();
-        $options = [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 200,
-            CURLOPT_HTTPHEADER => $headers
-        ];
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $params['headers']);
 
         if($method === 'POST'){
-            $options[CURLOPT_POST] = true;
-            $options[CURLOPT_POSTFIELDS] = http_build_query($body);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params['body']));
         }
 
-        curl_setopt_array($ch, $options);
-        if( ! $result = curl_exec($ch)) 
+        $result = curl_exec($ch);
+        if( $result == false) 
         { 
             trigger_error(curl_error($ch)); 
         } 
         curl_close($ch); 
-        return $result; 
+        return json_decode($result); 
     }
 
     /**
@@ -168,8 +166,8 @@ class Core
     public function makeGetRequest($options = []){
         return $this->request('GET', $options['endpoint'], [
             'headers' => [
-                'Authorization' => 'Basic ' . $options['token'],
-                'Content-Type'  => 'application/json',
+                'Authorization: Basic ' . $options['token'],
+                'Content-Type: application/json',
             ],
         ]);
     }
