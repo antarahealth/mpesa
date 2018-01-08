@@ -20,8 +20,15 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
      * @param  array  $items
      * @return void
      */
-    public function __construct(){
-        $defaultConfig = require __DIR__ . '/../../../config/mpesa.php';
+    public function __construct($conf = []){
+        // Config that comes with the package
+        $configFile = require __DIR__ . '/../../../config/mpesa.php';
+        if(\is_file($configFile)){
+            $defaultConfig = require $configFile;
+        }
+        $defaultConfig = array_merge($defaultConfig,$conf);
+
+        // Config after user edits the config file copied by the system
         $userConfig    = __DIR__ . '/../../../../../../config/mpesa.php';
         $custom        = [];
         if (\is_file($userConfig)) {
