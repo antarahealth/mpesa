@@ -16,7 +16,6 @@
     ],
     "autoload": {
         "files": [
-            "src/Mpesa/Support/helpers.php",
             "src/Mpesa/Support/constants.php"
         ],
         "psr-4": {
