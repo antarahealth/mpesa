@@ -22,14 +22,15 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
      */
     public function __construct($conf = []){
         // Config that comes with the package
-        $configFile = require __DIR__ . '/../../../config/mpesa.php';
+        $configFile =  __DIR__ . '/../../../config/mpesa.php';
+        $defaultConfig = [];
         if(\is_file($configFile)){
             $defaultConfig = require $configFile;
         }
         $defaultConfig = array_merge($defaultConfig,$conf);
 
         // Config after user edits the config file copied by the system
-        $userConfig    = __DIR__ . '/../../../../../../config/mpesa.php';
+        $userConfig    =  __DIR__ . '/../../../../../../config/mpesa.php';
         $custom        = [];
         if (\is_file($userConfig)) {
             $custom = require $userConfig;
@@ -77,7 +78,7 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
         $key = str_replace("mpesa.","",$key);
         $array = $this->items;
         if (! static::accessible($array)) {
-            return value($default);
+            return $this->value($default);
         }
 
         if (is_null($key)) {
@@ -89,14 +90,14 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
         }
 
         if (strpos($key, '.') === false) {
-            return $array[$key] ?: value($default);
+            return $array[$key] ?: $this->value($default);
         }
  
         foreach (explode('.', $key) as $segment) {
             if (static::accessible($array) && static::exists($array, $segment)) {
                 $array = $array[$segment];
             } else {
-                return value($default);
+                return $this->value($default);
             }
         }
  
@@ -173,5 +174,15 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
     public function offsetUnset($key)
     {
         $this->set($key, null);
+    }
+
+     /**
+     * Return the default value of the given value.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public function value($value){
+        return $value instanceof Closure ? $value() : $value;
     }
 }
