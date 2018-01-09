@@ -62,7 +62,9 @@ class Authenticator
         try {
             $response = $this->makeRequest();
             /// $this->saveCredentials($response);
-
+            if(!empty($response->errorCode)){
+                throw new \Exception(json_encode($response));
+            }
             return $response->access_token;
         } catch (\Exception $exception) {
             $message = $exception->getMessage();
