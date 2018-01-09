@@ -22,7 +22,7 @@ class NativeConfig implements ArrayAccess,ConfigurationStore
      */
     public function __construct($conf = []){
         // Config that comes with the package
-        $configFile =  __DIR__ . '/../../../config/mpesa.php';
+        $configFile =  __DIR__ . '/../../config/mpesa.php';
         $defaultConfig = [];
         if(\is_file($configFile)){
             $defaultConfig = require $configFile;

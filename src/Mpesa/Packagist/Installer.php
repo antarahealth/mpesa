@@ -8,8 +8,8 @@ class Installer
 {
     public static function install(Event $event)
     {
-        $config    = __DIR__ . '/../../../config/mpesa.php';
-        $cert    = __DIR__ . '/../../../config/mpesa_public_cert.cer';
+        $config    = __DIR__ . '/../../config/mpesa.php';
+        $cert    = __DIR__ . '/../../config/mpesa_public_cert.cer';
         $configDir = self::getConfigDirectory($event);
 
         if (! \is_file($configDir . '/mpesa.php')) {
@@ -30,7 +30,7 @@ class Installer
     public static function getConfigDirectory(Event $event)
     {
         $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
-        $configDir = $vendorDir . '/../config';
+        $configDir = $vendorDir . '/../src/config';
 
         if (! \is_dir($configDir)) {
             \mkdir($configDir, 0755, true);
