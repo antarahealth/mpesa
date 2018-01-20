@@ -26,8 +26,8 @@ class Mpesa
      * Mpesa constructor.
      *
      */
-    public function __construct(){
-        $config = new NativeConfig();
+    public function __construct($myconfig = []){
+        $config = new NativeConfig($myconfig);
         $cache = new NativeCache($config);
         $this->engine = new Core($config, $cache);
     }
