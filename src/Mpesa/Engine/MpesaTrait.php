@@ -25,7 +25,7 @@ trait MpesaTrait{
 
     public function C2BRegister($params = []){
         $c2b = new Register($this->engine);
-        return $c2b->submit();
+        return $c2b->submit($params);
     }
 
     public function C2BSimulate($params = []){
