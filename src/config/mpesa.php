@@ -30,22 +30,9 @@ return [
     | These are the credentials to be used to transact with the M-Pesa API
     */
 
-    'consumer_key' => '',
+    'consumer_key' => 'uwd4VCfOjYcpawEsAYAkRyUYKRgCBdJ7',
 
-    'consumer_secret' => '',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Paybill Number
-    |--------------------------------------------------------------------------
-    |
-    | This is a registered Paybill Number that will be used as the Merchant ID
-    | on every transaction. This is also the account to be debited.
-    |
-    |
-    |
-    */
-    'short_code' => 174379,
+    'consumer_secret' => 'cq1hvOrJMyQYtgHU',
 
 
     /*
@@ -84,6 +71,19 @@ return [
     |
     */
     'lnmo' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Paybill Number
+        |--------------------------------------------------------------------------
+        |
+        | This is a registered Paybill Number that will be used as the Merchant ID
+        | on every transaction. This is also the account to be debited.
+        |
+        |
+        |
+        */
+        'short_code' => 174379,
+
         /*
         | STK Push callback URL
         |--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ return [
 
         'validation_url' => '',
 
-        'on_timeout' => '',
+        'on_timeout' => 'Completed',
 
         'short_code' => '600256',
 
@@ -152,13 +152,13 @@ return [
     */
 
     'b2c' => [
-        'initiator_name' => 'testapi0297',
+        'initiator_name' => 'apiop59',
 
         'default_command_id' => 'BusinessPayment',
 
-        'security_credential' => 'oljNhHSgBGb/aPX//+mbeC2S/KhTh5Agmnzi/T5/aCaxXiGtuXRwFPBQ78iDA4Tzfcsz8ituD2AeP0gcOvF58wFSm4tXQTPnVZ1kvOOF91wuYx8jaS6Sa6lOgl6aXG1dA1ixht9sAWQHBs20sXwNzOoEfvrIdOpGDGhpZ8DQfwu6GY6AIEskeQoU7D67CM8ZmLzjaI6ZVSvSV9QctsWUeorLD2cPEI4zwDsPR59qz4H+BHMQdYqghaRuCiaXLsB97ruYvQYhUIqcWdMP7DVR4Vj7iIxfBTMYfMghmbvPAE2THhy8xuPAcaedtQn+2o8wNIncgKRB+QaPQiHAdLF+lg==',
+        'security_credential' => 'YAL2yKrn',
 
-        'short_code' => '600256',
+        'short_code' => '602973',
 
         'test_phone_number' => '254708374149',
 

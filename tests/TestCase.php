@@ -6,7 +6,9 @@ use Mockery;
 use PHPUnit\Framework\TestCase as PHPUnit;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Native\NativeCache;
+use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Native\NativeConfig;
+use Kabangi\Mpesa\Contracts\HttpRequest;
 
 class TestCase extends PHPUnit
 {
@@ -15,7 +17,11 @@ class TestCase extends PHPUnit
      *
      * @var Engine
      **/
-    protected $engine;
+    public $engine;
+
+    public $httpClient;
+
+    public $auth;
 
     /**
      * Set mocks.
@@ -24,6 +30,11 @@ class TestCase extends PHPUnit
     {
         $config       = new NativeConfig();
         $cache        = new NativeCache($config);
-        $this->engine = new Core($config, $cache);
+        $this->httpClient = $this->createMock(HttpRequest::class);
+        $this->auth = $this->createMock(Authenticator::class);
+        $this->engine  = new Core($config, $cache,$this->httpClient,$this->auth);
+    }
+
+    public function mockAuth(){
     }
 }

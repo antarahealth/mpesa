@@ -6,7 +6,9 @@ use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Native\NativeCache;
 use Kabangi\Mpesa\Native\NativeConfig;
 use Kabangi\Mpesa\Engine\MpesaTrait;
-
+use Kabangi\Mpesa\Auth\Authenticator;
+use Kabangi\Mpesa\Native\NativeConfig;
+use Kabangi\Mpesa\Engine\CurlRequest;
 /**
  * Class Mpesa
  *
@@ -29,6 +31,8 @@ class Mpesa
     public function __construct($myconfig = []){
         $config = new NativeConfig($myconfig);
         $cache = new NativeCache($config);
-        $this->engine = new Core($config, $cache);
+        $auth = new Authenticator();
+        $httpClient = new CurlRequest();
+        $this->engine = new Core($config, $cache,$httpClient,$auth);
     }
 }

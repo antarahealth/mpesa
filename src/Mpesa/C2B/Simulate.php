@@ -40,7 +40,7 @@ class Simulate
     public function __construct(Core $engine)
     {
         $this->engine   = $engine;
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -72,21 +72,10 @@ class Simulate
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            $message = $exception->getMessage();
-
-            throw new \Exception($message);;
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

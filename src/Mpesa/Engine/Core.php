@@ -5,7 +5,10 @@ namespace Kabangi\Mpesa\Engine;
 use Kabangi\Mpesa\Validation\Validator;    
 use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Contracts\CacheStore;
+use Kabangi\Mpesa\Exceptions\ConfigurationException;
+use Kabangi\Mpesa\Exceptions\MpesaException;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
+use Kabangi\Mpesa\Contracts\HttpRequest;
 
 /**
  * Class Core.
@@ -47,29 +50,36 @@ class Core
     public $validator;
 
     /**
+     * @var validation rules
+     * 
+    */
+    public $validationRules;
+
+    /**
+     * @var HttpRequest curl
+     */
+    protected $curl;
+
+    /**
      * Core constructor.
      *
      * @param ConfigurationStore $configStore
      * @param CacheStore         $cacheStore
      */
-    public function __construct(ConfigurationStore $configStore, CacheStore $cacheStore)
-    {
+    public function __construct(
+        ConfigurationStore $configStore, 
+        CacheStore $cacheStore,
+        HttpRequest $curl,
+        Authenticator $auth
+    ){
         $this->config = $configStore;
         $this->cache  = $cacheStore;
-        $this->validator = new Validator();
-
-        $this->initialize();
-
-        self::$instance = $this;
-    }
-
-    /**
-     * Initialize the Core process.
-     */
-    private function initialize()
-    {
+        $this->curl = $curl;
         $this->setBaseUrl();
-        $this->auth = new Authenticator($this);
+        $this->validator = new Validator();
+        self::$instance = $this;
+        $this->auth = $auth;
+        $this->auth->setEngine($this);
     }
 
     /**
@@ -83,26 +93,36 @@ class Core
         $this->baseUrl  = $apiRoot;
     }
 
-    public function addValidationRules($rules){
-        foreach($rules as $key => $value){
+    public function setValidationRules($rules){
+        $this->validationRules = $rules;
+        foreach($this->validationRules as $key => $value){
             $this->validator->add($key,$value);
         }
     }
 
-    public function validateParams($params){
-        if ($this->validator->validate($params)) {
-            return true;
-        }else{
+    private function validateRequestBodyParams($params){
+        if ($this->validator->validate($params) == false) {
             $errors = $this->validator->getMessages();
             $finalErrors = [];
             foreach($errors as $err){
                 foreach($err as $er){
                     $finalErrors[] = $er->__toString();
                 }
-                
             }
-            return $finalErrors;
+            $this->throwApiConfException(\json_encode($finalErrors));
         }
+        return true;
+    }
+
+    /**
+     * Throw an exception that describes a missing param.
+     *
+     * @param $reason
+     *
+     * @return ConfigurationException
+     */
+    public function throwApiConfException($reason){
+        throw new ConfigurationException($reason,422);
     }
 
     /**
@@ -122,6 +142,7 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makePostRequest($options = []){
+        
         $response = $this->request('POST', $options['endpoint'], [
             'headers' => [
                 'Authorization: Bearer ' . $this->auth->authenticate(),
@@ -134,25 +155,34 @@ class Core
     }
 
     private function request($method,$endpoint,$params){
+        // Validate params
+        if (!empty($this->validationRules) && isset($params['body'])) {
+            $this->validateRequestBodyParams($params['body']);
+        }
         $url = $this->baseUrl.$endpoint;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $params['headers']);
+
+        $this->curl->setOption(CURLOPT_URL, $url);
+        $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->curl->setOption(CURLOPT_HEADER, false);
+        $this->curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, $params['headers']);
 
         if($method === 'POST'){
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params['body']));
+            $this->curl->setOption(CURLOPT_POST, true);
+            $this->curl->setOption(CURLOPT_POSTFIELDS, json_encode($params['body']));
         }
 
-        $result = curl_exec($ch);
-        if( $result == false) 
-        { 
-            trigger_error(curl_error($ch)); 
-        } 
-        curl_close($ch); 
+        $result = $this->curl->execute();
+        $httpCode = $this->curl->getInfo(CURLINFO_HTTP_CODE);
+
+        if( $result === false){ 
+            throw new \Exception($this->curl->error());
+        }
+
+        if($httpCode != 200){
+            throw new MpesaException($result,$httpCode);
+        }
+        $this->curl->close(); 
         return json_decode($result); 
     }
 
@@ -178,13 +208,13 @@ class Core
      */
     public function computeSecurityCredential($initiatorPass){
         $pubKeyFile =  __DIR__ . '/../../config/mpesa_public_cert.cer';
-        $key = '';
+        $pubKey = '';
         if(\is_file($pubKeyFile)){
             $pubKey = file_get_contents($pubKeyFile);
         }else{
             throw new \Exception("Please provide a valid public key file");
         }
-        openssl_public_encrypt($initiatorPass, $encrypted, $key, OPENSSL_PKCS1_PADDING);
+        openssl_public_encrypt($initiatorPass, $encrypted, $pubKey, OPENSSL_PKCS1_PADDING);
         return base64_encode($encrypted);
     }
 }

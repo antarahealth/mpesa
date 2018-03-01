@@ -5,13 +5,15 @@ use Kabangi\Mpesa\Native\Mpesa;
 
 $mpesa = new Mpesa();
 
-$response = $mpesa->STKPush([
+$response = $mpesa->B2C([
     'amount' => 10,
-    'phoneNumber' => '254723731241',
     'accountReference' => '12',
-    'callBackURL' => 'https://sandbox.connecthealth.io/v1/payments/C2B/confirmation',
-    'transactionDesc' => 'Test'
+    'callBackURL' => 'https://example.com/v1/payments/C2B/confirmation',
+    'queueTimeOutURL' => 'https://example.com/v1/payments/C2B/confirmation',
+    'resultURL' => 'https://example.com/v1/payments/C2B/confirmation',
+    'Remarks' => 'Test'
 ]);
+
 header('Content-Type: application/json');
 echo json_encode($response);
 
@@ -21,7 +23,7 @@ echo json_encode($response);
 
 // $mpesa->C2BSimulate([]);
 
-// $mpesa->B2C([]);
+
 
 // $mpesa->accountBalance([]);
 

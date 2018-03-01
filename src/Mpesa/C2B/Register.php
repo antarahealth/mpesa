@@ -40,7 +40,7 @@ class Register
     public function __construct(Core $engine)
     {
         $this->engine   = $engine;
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -57,7 +57,7 @@ class Register
             $userParams[ucwords($key)] = $value;
         }
 
-        $shortCode = $this->engine->config->get('mpesa.short_code');
+        $shortCode = $this->engine->config->get('mpesa.c2b.short_code');
         $confirmationURL   = $this->engine->config->get('mpesa.c2b.confirmation_url');
         $onTimeout   = $this->engine->config->get('mpesa.c2b.on_timeout');
         $validationURL   = $this->engine->config->get('mpesa.c2b.validation_url');
@@ -71,21 +71,10 @@ class Register
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (\Exception $exception) {
-            $message = $exception->getMessage();
-
-            throw new \Exception($message);
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

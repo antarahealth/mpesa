@@ -40,10 +40,12 @@ class Authenticator
      *
      * @param Core $core
      */
-    public function __construct(Core $core)
-    {
-        $this->engine   = $core;
+    public function __construct(){
         self::$instance = $this;
+    }
+
+    public function setEngine(Core $core){
+        $this->engine   = $core;
     }
 
     /**

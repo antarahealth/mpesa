@@ -29,16 +29,25 @@ class Pay {
      */
     public function __construct(Core $engine)
     {
-        $this->engine       = $engine;
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine = $engine;
+        $this->engine->setValidationRules($this->validationRules);
+    }
+
+    /**
+     * Throw a contextual exception.
+     *
+     * @param $reason
+     *
+     * @return ConfigurationException
+     */
+    private function generateException($reason){
+        return new ConfigurationException($reason,422);
     }
 
     /**
      * Initiate the registration process.
      *
-     * @param null $amount
-     * @param null $number
-     * @param null $description
+     * @param array [$amount,$partyB,$description]
      *
      * @return mixed
      *
@@ -61,10 +70,10 @@ class Pay {
         $successCallback  = $this->engine->config->get('mpesa.b2c.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.b2c.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.b2c.initiator_name');
-        // TODO: Compute
-        $securityCredential  = $this->engine->config->get('mpesa.b2c.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.b2c.security_credential');
         $commandId  = $this->engine->config->get('mpesa.b2c.default_command_id');
-
+        
+        // Params coming from the config file
         $configParams = [
             'InitiatorName'     => $initiator,
             'SecurityCredential'=> $securityCredential,
@@ -76,19 +85,11 @@ class Pay {
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (\Exception $exception) {
-            return \json_decode($exception->getMessage());
-        }
+        // Send the request to mpesa
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

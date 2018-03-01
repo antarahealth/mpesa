@@ -32,7 +32,7 @@ class STKPush{
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
     
 
@@ -50,7 +50,7 @@ class STKPush{
         }
 
         $time      = $this->engine->getCurrentRequestTime();
-        $shortCode = $this->engine->config->get('mpesa.short_code');
+        $shortCode = $this->engine->config->get('mpesa.lnmo.short_code');
         $passkey   = $this->engine->config->get('mpesa.lnmo.passkey');
         $password  = \base64_encode($shortCode . $passkey . $time);
 
@@ -70,19 +70,9 @@ class STKPush{
             $body['PartyA'] = $body['PhoneNumber'];
         }
         
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
-
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (\Exception $exception) {
-            return \json_decode($exception->getMessage());
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }
