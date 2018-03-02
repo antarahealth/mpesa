@@ -2,13 +2,11 @@
 
 namespace Kabangi\Mpesa\B2B;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Pay {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/b2b/v1/paymentrequest';
 
     protected $engine;
 
@@ -35,8 +33,7 @@ class Pay {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_B2B);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -61,11 +58,11 @@ class Pay {
         $successCallback  = $this->engine->config->get('mpesa.b2b.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.b2b.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.b2b.initiator_name');
-        // TODO: Compute
-        $securityCredential  = $this->engine->config->get('mpesa.b2b.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.b2b.security_credential');
         $commandId  = $this->engine->config->get('mpesa.b2b.default_command_id');
-        // TODO: Compute
-        $identifierType = 4;
+
+        // TODO: Compute. For now only support ShortCode
+        $receiverIdentifierType = 4;
         $senderIdentifierType = 4;
 
         $configParams = [
@@ -73,7 +70,7 @@ class Pay {
             'SecurityCredential'        => $securityCredential,
             'CommandID'                 => $commandId,
             'PartyA'                    => $shortCode,
-            'RecieverIdentifierType'    => $identifierType,
+            'RecieverIdentifierType'    => $receiverIdentifierType,
             'SenderIdentifierType'      => $senderIdentifierType,
             'QueueTimeOutURL'           => $timeoutCallback,
             'ResultURL'                 => $successCallback,
@@ -81,20 +78,10 @@ class Pay {
         
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
-
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
-        }
+        
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

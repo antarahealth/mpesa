@@ -2,14 +2,11 @@
 
 namespace Kabangi\Mpesa\LipaNaMpesaOnline;
 
-use Carbon\Carbon;
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class STKPush{
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/stkpush/v1/processrequest';
 
     protected $engine;
 
@@ -35,8 +32,7 @@ class STKPush{
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_STK_PUSH);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
     
 
@@ -53,8 +49,8 @@ class STKPush{
             $userParams[ucwords($key)] = $value;
         }
 
-        $time      = Carbon::now()->format('YmdHis');
-        $shortCode = $this->engine->config->get('mpesa.short_code');
+        $time      = $this->engine->getCurrentRequestTime();
+        $shortCode = $this->engine->config->get('mpesa.lnmo.short_code');
         $passkey   = $this->engine->config->get('mpesa.lnmo.passkey');
         $password  = \base64_encode($shortCode . $passkey . $time);
 
@@ -74,19 +70,9 @@ class STKPush{
             $body['PartyA'] = $body['PhoneNumber'];
         }
         
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
-
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

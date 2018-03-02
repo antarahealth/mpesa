@@ -2,17 +2,16 @@
 
 namespace Kabangi\Mpesa\Reversal;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Reversal {
-    protected $endpoint;
+
+    protected $endpoint = 'mpesa/reversal/v1/request';
 
     protected $engine;
 
     protected $validationRules = [
-        'Initiator:Initiator' => 'required()({label} is required) | number',
+        'Initiator:Initiator' => 'required()({label} is required)',
         'SecurityCredential:SecurityCredential' => 'required()({label} is required)',
         'CommandID:CommandID' => 'required()({label} is required)',
         'RecieverIdentifierType:RecieverIdentifierType' => 'required()({label} is required)',
@@ -31,8 +30,7 @@ class Reversal {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->endpoint = EndpointsRepository::build(MPESA_REVERSAL);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -56,9 +54,7 @@ class Reversal {
         $timeoutCallback  = $this->engine->config->get('mpesa.reversal.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.reversal.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.reversal.default_command_id');
-        
-        // TODO: Compute
-        $securityCredential  = $this->engine->config->get('mpesa.reversal.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.reversal.security_credential');
         // TODO: Compute
         $identifierType = '4';
 
@@ -74,18 +70,10 @@ class Reversal {
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
-        }
+
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

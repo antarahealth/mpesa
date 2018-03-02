@@ -2,28 +2,19 @@
 
 namespace Kabangi\Mpesa\Tests\Unit;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Kabangi\Mpesa\Auth\Authenticator;
-use PHPUnit\Framework\TestCase;
+use Kabangi\Mpesa\Tests\TestCase;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
 use Kabangi\Mpesa\Native\NativeCache;
 use Kabangi\Mpesa\Native\NativeConfig;
 
-class AuthenticatorTest extends TestCase
-{
-    protected $config;
-    protected $cache;
+class AuthenticatorTest extends TestCase{
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         $this->cleanCache();
-        $this->config =new NativeConfig();
-        $this->cache  = new NativeCache($this->config);
     }
 
     private function cleanCache()
@@ -39,36 +30,17 @@ class AuthenticatorTest extends TestCase
      *
      * @test
      **/
-    public function testAuthentication()
-    {
-        $mock = new MockHandler([
-            new Response(202, [], \json_encode(['access_token' => 'access', 'expires_in' => 3599])),
-        ]);
+    public function testAuthentication(){
+        $this->httpClient->method('execute')
+        ->will($this->returnValue('{"access_token":"asdasdsad"}'));
+        
+        $this->httpClient->method('getInfo')
+        ->will($this->returnValue(200));
 
-        $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
-        $engine  = new Core($client, $this->config, $this->cache);
-        $auth    = new Authenticator($engine);
-        $token   = $auth->authenticate();
-        $this->assertEquals('access', $token);
-    }
-
-    /**
-     * Test that authenticator works.
-     *
-     * @test
-     **/
-    public function testAuthenticationFailure()
-    {
-        $this->expectException(ConfigurationException::class);
-        $mock = new MockHandler([
-            new Response(400, [], \json_encode([]), null, 'Bad Request: Invalid Credentials'),
-        ]);
-
-        $handler = HandlerStack::create($mock);
-        $client  = new Client(['handler' => $handler]);
-        $engine  = new Core($client, $this->config, $this->cache);
-        $auth    = new Authenticator($engine);
-        $auth->authenticate();
+        $auth   = new Authenticator();
+        $auth->setEngine($this->engine);
+        
+        $token  = $auth->authenticate();
+        $this->assertInternalType('string', $token);
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Kabangi\Mpesa\Engine;
 
-use GuzzleHttp\ClientInterface;
-use Sirius\Validation\Validator;    
+use Kabangi\Mpesa\Validation\Validator;    
 use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Contracts\CacheStore;
+use Kabangi\Mpesa\Exceptions\ConfigurationException;
+use Kabangi\Mpesa\Exceptions\MpesaException;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
+use Kabangi\Mpesa\Contracts\HttpRequest;
 
 /**
  * Class Core.
@@ -34,14 +35,14 @@ class Core
     public static $instance;
 
     /**
-     * @var ClientInterface
-     */
-    public $client;
-
-    /**
      * @var Authenticator
      */
     public $auth;
+
+    /**
+     * @var string
+     */
+    public $baseUrl;
 
     /**
      * @var Validator
@@ -49,63 +50,88 @@ class Core
     public $validator;
 
     /**
+     * @var validation rules
+     * 
+    */
+    public $validationRules;
+
+    /**
+     * @var HttpRequest curl
+     */
+    protected $curl;
+
+    /**
      * Core constructor.
      *
-     * @param ClientInterface    $client
      * @param ConfigurationStore $configStore
      * @param CacheStore         $cacheStore
      */
-    public function __construct(ClientInterface $client, ConfigurationStore $configStore, CacheStore $cacheStore)
-    {
+    public function __construct(
+        ConfigurationStore $configStore, 
+        CacheStore $cacheStore,
+        HttpRequest $curl,
+        Authenticator $auth
+    ){
         $this->config = $configStore;
         $this->cache  = $cacheStore;
+        $this->curl = $curl;
+        $this->setBaseUrl();
         $this->validator = new Validator();
-        $this->setClient($client);
-
-        $this->initialize();
-
         self::$instance = $this;
+        $this->auth = $auth;
+        $this->auth->setEngine($this);
     }
 
     /**
-     * Initialize the Core process.
+     * Validate the current package state.
      */
-    private function initialize()
-    {
-        new EndpointsRepository($this->config);
-        $this->auth = new Authenticator($this);
+    private function setBaseUrl(){
+        $apiRoot = $this->config->get('mpesa.apiUrl', '');
+        if (substr($apiRoot, strlen($apiRoot) - 1) !== '/') {
+            $apiRoot = $apiRoot . '/';
+        }
+        $this->baseUrl  = $apiRoot;
     }
 
-    /**
-     * Set http client.
-     *
-     * @param ClientInterface $client
-     **/
-    public function setClient(ClientInterface $client)
-    {
-        $this->client = $client;
-    }
-
-    public function addValidationRules($rules){
-        foreach($rules as $key => $value){
+    public function setValidationRules($rules){
+        $this->validationRules = $rules;
+        foreach($this->validationRules as $key => $value){
             $this->validator->add($key,$value);
         }
     }
 
-    public function validateParams($params){
-        if ($this->validator->validate($params)) {
-            return true;
-        }else{
+    private function validateRequestBodyParams($params){
+        if ($this->validator->validate($params) == false) {
             $errors = $this->validator->getMessages();
             $finalErrors = [];
             foreach($errors as $err){
                 foreach($err as $er){
                     $finalErrors[] = $er->__toString();
                 }
-                
             }
-            return $finalErrors;
+            $this->throwApiConfException(\json_encode($finalErrors));
         }
+        return true;
+    }
+
+    /**
+     * Throw an exception that describes a missing param.
+     *
+     * @param $reason
+     *
+     * @return ConfigurationException
+     */
+    public function throwApiConfException($reason){
+        throw new ConfigurationException($reason,422);
+    }
+
+    /**
+     * Get current request time
+     * @return 
+     */
+    public function getCurrentRequestTime(){
+        $date = new \DateTime();
+        return $date->format('YmdHis');
     }
 
     /**
@@ -116,15 +142,48 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makePostRequest($options = []){
-        $response = $this->client->request('POST', $options['endpoint'], [
+        
+        $response = $this->request('POST', $options['endpoint'], [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->auth->authenticate(),
-                'Content-Type'  => 'application/json',
+                'Authorization: Bearer ' . $this->auth->authenticate(),
+                'Content-Type: application/json',
             ],
-            'json' => $options['body'],
+            'body' => $options['body'],
         ]);
 
-        return \json_decode($response->getBody());
+        return $response;
+    }
+
+    private function request($method,$endpoint,$params){
+        // Validate params
+        if (!empty($this->validationRules) && isset($params['body'])) {
+            $this->validateRequestBodyParams($params['body']);
+        }
+        $url = $this->baseUrl.$endpoint;
+
+        $this->curl->setOption(CURLOPT_URL, $url);
+        $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->curl->setOption(CURLOPT_HEADER, false);
+        $this->curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
+        $this->curl->setOption(CURLOPT_HTTPHEADER, $params['headers']);
+
+        if($method === 'POST'){
+            $this->curl->setOption(CURLOPT_POST, true);
+            $this->curl->setOption(CURLOPT_POSTFIELDS, json_encode($params['body']));
+        }
+
+        $result = $this->curl->execute();
+        $httpCode = $this->curl->getInfo(CURLINFO_HTTP_CODE);
+
+        if( $result === false){ 
+            throw new \Exception($this->curl->error());
+        }
+
+        if($httpCode != 200){
+            throw new MpesaException($result,$httpCode);
+        }
+        $this->curl->close(); 
+        return json_decode($result); 
     }
 
     /**
@@ -135,11 +194,27 @@ class Core
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
     public function makeGetRequest($options = []){
-        return $this->client->request('GET', $options['endpoint'], [
+        return $this->request('GET', $options['endpoint'], [
             'headers' => [
-                'Authorization' => 'Basic ' . $options['token'],
-                'Content-Type'  => 'application/json',
+                'Authorization: Basic ' . $options['token'],
+                'Content-Type: application/json',
             ],
         ]);
+    }
+
+    /**
+     * Compute security credential
+     * 
+     */
+    public function computeSecurityCredential($initiatorPass){
+        $pubKeyFile =  __DIR__ . '/../../config/mpesa_public_cert.cer';
+        $pubKey = '';
+        if(\is_file($pubKeyFile)){
+            $pubKey = file_get_contents($pubKeyFile);
+        }else{
+            throw new \Exception("Please provide a valid public key file");
+        }
+        openssl_public_encrypt($initiatorPass, $encrypted, $pubKey, OPENSSL_PKCS1_PADDING);
+        return base64_encode($encrypted);
     }
 }

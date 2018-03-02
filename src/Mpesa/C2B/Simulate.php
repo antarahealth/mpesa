@@ -2,10 +2,8 @@
 
 namespace Kabangi\Mpesa\C2B;
 
-use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Simulate.
@@ -19,7 +17,7 @@ class Simulate
     /**
      * @var string
      */
-    protected $endpoint;
+    protected $endpoint = 'mpesa/c2b/v1/simulate';
 
     /**
      * @var Core
@@ -42,8 +40,7 @@ class Simulate
     public function __construct(Core $engine)
     {
         $this->engine   = $engine;
-        $this->endpoint = EndpointsRepository::build(MPESA_C2B_SIMULATE);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -75,23 +72,10 @@ class Simulate
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            $message = $exception->getResponse() ?
-               $exception->getResponse()->getReasonPhrase() :
-               $exception->getMessage();
-
-            throw new \Exception($message);;
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

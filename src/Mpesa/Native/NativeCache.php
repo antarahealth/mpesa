@@ -2,7 +2,6 @@
 
 namespace Kabangi\Mpesa\Native;
 
-use Carbon\Carbon;
 use Kabangi\Mpesa\Contracts\CacheStore;
 
 /**
@@ -76,21 +75,33 @@ class NativeCache implements CacheStore
             $initial = $this->cleanCache($initial, $location);
         }
 
-        $minutes = $minutes ? Carbon::now()->addMinutes($minutes)->toDateTimeString() : null;
+        $minutes = $this->computeExpiryTime($minutes);
         $payload = [$key => ['v' => $value, 't' => $minutes]];
         $payload = \serialize(\array_merge($payload, $initial));
 
         \file_put_contents($location, $payload);
     }
 
+    public function computeExpiryTime($minutes){
+        if(empty($minutes)){
+            return null;
+        }
+        $date = new \DateTime();
+        $expiry = $date->modify((int) $minutes.' minutes')->format('Y-m-d H:i:s');
+        return $expiry;
+    }
+
     private function cleanCache($initial, $location)
     {
+        
+
         $initial = \array_filter($initial, function ($value) {
             if (! $value['t']) {
                 return true;
             }
-
-            if (Carbon::now()->gt(Carbon::parse($value['t']))) {
+            $expiry = new \DateTime($value['t']);
+            $currentDt = new \DateTime();
+            if ($currentDt > $expiry) {
                 return false;
             }
 

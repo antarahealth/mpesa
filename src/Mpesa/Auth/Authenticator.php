@@ -2,11 +2,9 @@
 
 namespace Kabangi\Mpesa\Auth;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Exceptions\ErrorException;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Authenticator.
@@ -25,7 +23,7 @@ class Authenticator
     /**
      * @var string
      */
-    protected $endpoint;
+    protected $endpoint = 'oauth/v1/generate?grant_type=client_credentials';
 
     /**
      * @var Core
@@ -42,11 +40,12 @@ class Authenticator
      *
      * @param Core $core
      */
-    public function __construct(Core $core)
-    {
-        $this->engine   = $core;
-        $this->endpoint = EndpointsRepository::build(MPESA_AUTH);
+    public function __construct(){
         self::$instance = $this;
+    }
+
+    public function setEngine(Core $core){
+        $this->engine   = $core;
     }
 
     /**
@@ -58,20 +57,19 @@ class Authenticator
      */
     public function authenticate()
     {
-        if ($token = $this->engine->cache->get(self::AC_TOKEN)) {
-            return $token;
-        }
+        // if ($token = $this->engine->cache->get(self::AC_TOKEN)) {
+        //     return $token;
+        // }
 
         try {
             $response = $this->makeRequest();
-            $body     = \json_decode($response->getBody());
-            $this->saveCredentials($body);
-
-            return $body->access_token;
-        } catch (RequestException $exception) {
-            $message = $exception->getResponse() ?
-               $exception->getResponse()->getReasonPhrase() :
-               $exception->getMessage();
+            /// $this->saveCredentials($response);
+            if(!empty($response->errorCode)){
+                throw new \Exception(json_encode($response));
+            }
+            return $response->access_token;
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
             
             throw $this->generateException($message);
         }
@@ -103,7 +101,6 @@ class Authenticator
     {
         $key    = $this->engine->config->get('mpesa.consumer_key');
         $secret = $this->engine->config->get('mpesa.consumer_secret');
-
         return \base64_encode($key . ':' . $secret);
     }
 

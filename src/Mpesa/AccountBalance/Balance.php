@@ -2,13 +2,11 @@
 
 namespace Kabangi\Mpesa\AccountBalance;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class Balance {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/accountbalance/v1/query';
     
     protected $engine;
 
@@ -20,8 +18,6 @@ class Balance {
         'IdentifierType:IdentifierType' => 'required()({label} is required)',
         'Remarks:Remarks' => 'required()({label} is required)',
         'QueueTimeOutURL:QueueTimeOutURL' => 'required()({label} is required)',
-        'PhoneNumber:PhoneNumber' => 'required()({label} is required)',
-        'CallBackURL:CallBackURL' => 'required()({label} is required) | website',
         'ResultURL:ResultURL' => 'required()({label} is required)'
     ];
 
@@ -33,8 +29,7 @@ class Balance {
     public function __construct(Core $engine)
     {
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_ACCOUNT_BALANCE);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -59,8 +54,7 @@ class Balance {
         $initiator  = $this->engine->config->get('mpesa.account_balance.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.account_balance.default_command_id');
         
-        // TODO: Compute
-        $securityCredential  = $this->engine->config->get('mpesa.account_balance.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.account_balance.security_credential');
         // TODO: Compute
         $identifierType = '4';
 
@@ -77,19 +71,9 @@ class Balance {
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
 
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
-
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->pushEndpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

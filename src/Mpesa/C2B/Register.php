@@ -2,10 +2,8 @@
 
 namespace Kabangi\Mpesa\C2B;
 
-use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 /**
  * Class Register.
@@ -20,7 +18,7 @@ class Register
     /**
      * @var string
      */
-    protected $endpoint;
+    protected $endpoint = 'mpesa/c2b/v1/registerurl';
 
     /**
      * @var Core
@@ -42,8 +40,7 @@ class Register
     public function __construct(Core $engine)
     {
         $this->engine   = $engine;
-        $this->endpoint = EndpointsRepository::build(MPESA_C2B_REGISTER);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -60,7 +57,7 @@ class Register
             $userParams[ucwords($key)] = $value;
         }
 
-        $shortCode = $this->engine->config->get('mpesa.short_code');
+        $shortCode = $this->engine->config->get('mpesa.c2b.short_code');
         $confirmationURL   = $this->engine->config->get('mpesa.c2b.confirmation_url');
         $onTimeout   = $this->engine->config->get('mpesa.c2b.on_timeout');
         $validationURL   = $this->engine->config->get('mpesa.c2b.validation_url');
@@ -74,23 +71,10 @@ class Register
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            $message = $exception->getResponse() ?
-               $exception->getResponse()->getReasonPhrase() :
-               $exception->getMessage();
-
-            throw new \Exception($message);
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }

@@ -2,18 +2,17 @@
 
 namespace Kabangi\Mpesa\TransactionStatus;
 
-use GuzzleHttp\Exception\RequestException;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Repositories\EndpointsRepository;
 
 class TransactionStatus {
 
-    protected $pushEndpoint;
+    protected $endpoint = 'mpesa/transactionstatus/v1/query';
     
     protected $engine;
 
     protected $validationRules = [
-        'Initiator:Initiator' => 'required()({label} is required) | number',
+        'Initiator:Initiator' => 'required()({label} is required)',
         'SecurityCredential:SecurityCredential' => 'required()({label} is required)',
         'CommandID:CommandID' => 'required()({label} is required)',
         'IdentifierType:IdentifierType' => 'required()({label} is required)',
@@ -23,7 +22,6 @@ class TransactionStatus {
         'ResultURL:ResultURL' => 'required()({label} is required)',
         'TransactionID:TransactionID' => 'required()({label} is required)',
     ];
-
     /**
      * TransactionStatus constructor.
      *
@@ -31,8 +29,7 @@ class TransactionStatus {
      */
     public function __construct(Core $engine){
         $this->engine       = $engine;
-        $this->pushEndpoint = EndpointsRepository::build(MPESA_TRANSACTION_STATUS);
-        $this->engine->addValidationRules($this->validationRules);
+        $this->engine->setValidationRules($this->validationRules);
     }
 
     /**
@@ -50,15 +47,12 @@ class TransactionStatus {
         foreach ($params as $key => $value) {
             $userParams[ucwords($key)] = $value;
         }
-
         $shortCode = $this->engine->config->get('mpesa.transaction_status.short_code');
         $successCallback  = $this->engine->config->get('mpesa.transaction_status.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.transaction_status.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.transaction_status.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.transaction_status.default_command_id');
-        
-        // TODO: Compute
-        $securityCredential  = $this->engine->config->get('mpesa.transaction_status.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.transaction_status.security_credential');
         // TODO: Compute
         $identifierType = 4;
 
@@ -74,19 +68,10 @@ class TransactionStatus {
 
         // This gives precedence to params coming from user allowing them to override config params
         $body = array_merge($configParams,$userParams);
-        // Validate $body based on the daraja docs.
-        $validationResponse = $this->engine->validateParams($body);
-        if($validationResponse !== true){
-            return $validationResponse;
-        }
 
-        try {
-            return $this->engine->makePostRequest([
-                'endpoint' => $this->endpoint,
-                'body' => $body
-            ]);
-        } catch (RequestException $exception) {
-            return \json_decode($exception->getResponse()->getBody());
-        }
+        return $this->engine->makePostRequest([
+            'endpoint' => $this->endpoint,
+            'body' => $body
+        ]);
     }
 }
