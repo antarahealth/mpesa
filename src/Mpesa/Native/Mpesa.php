@@ -7,7 +7,6 @@ use Kabangi\Mpesa\Native\NativeCache;
 use Kabangi\Mpesa\Native\NativeConfig;
 use Kabangi\Mpesa\Engine\MpesaTrait;
 use Kabangi\Mpesa\Auth\Authenticator;
-use Kabangi\Mpesa\Native\NativeConfig;
 use Kabangi\Mpesa\Engine\CurlRequest;
 /**
  * Class Mpesa
