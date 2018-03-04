@@ -15,7 +15,7 @@ use Kabangi\Mpesa\Engine\CurlRequest;
  *
  * @author   Julius Kabangi <Kabangijulius@gmail.com>
  */
-class Mpesa
+class Init
 {
     use MpesaTrait;
 
