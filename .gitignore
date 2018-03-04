@@ -5,3 +5,4 @@ composer.lock
 index.php
 /cache
 /.phpintel
+src/.php-autoload-generator-cache.json
