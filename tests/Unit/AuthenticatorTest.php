@@ -6,8 +6,7 @@ use Kabangi\Mpesa\Auth\Authenticator;
 use Kabangi\Mpesa\Tests\TestCase;
 use Kabangi\Mpesa\Engine\Core;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
-use Kabangi\Mpesa\Native\NativeCache;
-use Kabangi\Mpesa\Native\NativeConfig;
+
 
 class AuthenticatorTest extends TestCase{
 

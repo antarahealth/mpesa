@@ -15,7 +15,6 @@ use Kabangi\Mpesa\Contracts\HttpRequest;
  *
  * @category PHP
  *
- * @author   David Mjomba <Kabangiprivate@gmail.com>
  */
 class Core
 {

@@ -1,29 +1,29 @@
 <?php
 
-namespace Kabangi\Mpesa\Native;
+namespace Kabangi\Mpesa\Engine;
 
 use Kabangi\Mpesa\Contracts\CacheStore;
 
 /**
- * Class NativeCache
+ * Class Cache
  *
  * @category PHP
  *
- * @author   David Mjomba <Kabangiprivate@gmail.com>
+ * @author   David Mjomba <private@gmail.com>
  */
-class NativeCache implements CacheStore
+class Cache implements CacheStore
 {
     /**
-     * @var NativeConfig
+     * @var Config
      */
     private $config;
 
     /**
-     * NativeCache constructor.
+     * Cache constructor.
      *
-     * @param NativeConfig $config
+     * @param Config $config
      */
-    public function __construct(NativeConfig $config)
+    public function __construct(Config $config)
     {
         $this->config = $config;
     }

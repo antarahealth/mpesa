@@ -1,11 +1,11 @@
 <?php
 
-namespace Kabangi\Mpesa\Native;
+namespace Kabangi\Mpesa\Engine;
 
 use ArrayAccess;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
 
-class NativeConfig implements ArrayAccess,ConfigurationStore
+class Config implements ArrayAccess,ConfigurationStore
 {
     /**
      * All of the configuration items.
