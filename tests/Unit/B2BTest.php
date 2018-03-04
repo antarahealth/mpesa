@@ -4,9 +4,7 @@ namespace Kabangi\Mpesa\Tests\Unit;
 
 use Kabangi\Mpesa\Tests\TestCase;
 use Kabangi\Mpesa\B2B\Pay;
-use Kabangi\Mpesa\Native\NativeCache;
 use Kabangi\Mpesa\Engine\Core;
-use Kabangi\Mpesa\Native\NativeConfig;
 use Kabangi\Mpesa\Contracts\ConfigurationStore;
 use Kabangi\Mpesa\Exceptions\ConfigurationException;
 use Kabangi\Mpesa\Exceptions\MpesaException;

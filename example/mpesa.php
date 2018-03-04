@@ -1,7 +1,10 @@
 <?php
 require "../src/autoload.php";
 
-use Kabangi\Mpesa\Native\Mpesa;
+use Kabangi\Mpesa\Init as Mpesa;
+
+// You can also pass your own config here.
+// Check the folder ./config/mpesa.php for reference
 
 $mpesa = new Mpesa();
 
