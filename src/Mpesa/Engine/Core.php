@@ -159,7 +159,7 @@ class Core
             $this->validateRequestBodyParams($params['body']);
         }
         $url = $this->baseUrl.$endpoint;
-
+        $this->curl->reset();
         $this->curl->setOption(CURLOPT_URL, $url);
         $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->curl->setOption(CURLOPT_HEADER, false);
@@ -177,11 +177,9 @@ class Core
         if( $result === false){ 
             throw new \Exception($this->curl->error());
         }
-
         if($httpCode != 200){
             throw new MpesaException($result,$httpCode);
-        }
-        $this->curl->close(); 
+        } 
         return json_decode($result); 
     }
 
