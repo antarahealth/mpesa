@@ -16,4 +16,5 @@ interface HttpRequest
     public function error();
     public function getInfo($name);
     public function close();
+    public function reset();
 }
