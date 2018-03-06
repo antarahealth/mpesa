@@ -30,9 +30,17 @@ return [
     | These are the credentials to be used to transact with the M-Pesa API
     */
 
-    'consumer_key' => 'uwd4VCfOjYcpawEsAYAkRyUYKRgCBdJ7',
-
-    'consumer_secret' => 'cq1hvOrJMyQYtgHU',
+    'apps' => [
+        'default' => [
+            'consumer_key' => 'uwd4VCfOjYcpawEsAYAkRyUYKRgCBdJ7',
+    
+            'consumer_secret' => 'cq1hvOrJMyQYtgHU',
+        ],
+        'bulk' => [
+            'consumer_key' => '',
+            'consumer_secret' => '',
+        ],
+    ],
 
 
     /*

@@ -55,14 +55,19 @@ class Authenticator
      *
      * @throws ConfigurationException
      */
-    public function authenticate()
+    public function authenticate($app = 'default')
     {
         // if ($token = $this->engine->cache->get(self::AC_TOKEN)) {
         //     return $token;
         // }
 
         try {
-            $response = $this->makeRequest();
+
+            $credentials = $this->generateCredentials($app);
+            $response = $this->engine->makeGetRequest([
+                'endpoint' => $this->endpoint,
+                'token' => $credentials
+            ]);
             /// $this->saveCredentials($response);
             if(!empty($response->errorCode)){
                 throw new \Exception(json_encode($response));
@@ -97,26 +102,18 @@ class Authenticator
      *
      * @return string
      */
-    private function generateCredentials()
-    {
-        $key    = $this->engine->config->get('mpesa.consumer_key');
-        $secret = $this->engine->config->get('mpesa.consumer_secret');
+    private function generateCredentials($activeAppName = 'default'){
+        $safApps = $this->engine->config->get('mpesa.apps');
+        if (!isset($safApps[$activeAppName])) {
+            throw new ConfigurationException("You do not have such a Safaricom App on your config file. Make sure {$activeAppName} is set and filled ");
+        }
+        $activeApp = $safApps[$activeAppName];
+        $key    = $activeApp['consumer_key'];
+        $secret = $activeApp['consumer_secret'];
+        if (empty($key) || empty($secret)) {
+            throw new ConfigurationException("You have not set either consumer key or consumer secret for {$activeAppName} app");
+        }
         return \base64_encode($key . ':' . $secret);
-    }
-
-    /**
-     * Initiate the authentication request.
-     *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    private function makeRequest()
-    {
-        $credentials = $this->generateCredentials();
-        
-        return $this->engine->makeGetRequest([
-            'endpoint' => $this->endpoint,
-            'token' => $credentials
-        ]);
     }
 
     /**

@@ -140,11 +140,11 @@ class Core
     *
     * @return mixed|\Psr\Http\Message\ResponseInterface
     **/
-    public function makePostRequest($options = []){
+    public function makePostRequest($options = [],$appName = 'default'){
         
         $response = $this->request('POST', $options['endpoint'], [
             'headers' => [
-                'Authorization: Bearer ' . $this->auth->authenticate(),
+                'Authorization: Bearer ' . $this->auth->authenticate($appName),
                 'Content-Type: application/json',
             ],
             'body' => $options['body'],

@@ -42,7 +42,7 @@ class STKPush{
      * @param Array $params
      * 
     */
-    public function submit($params = []){
+    public function submit($params = [],$appName='default'){
         // Make sure all the indexes are in Uppercases as shown in docs
         $userParams = [];
         foreach ($params as $key => $value) {
@@ -73,6 +73,6 @@ class STKPush{
         return $this->engine->makePostRequest([
             'endpoint' => $this->endpoint,
             'body' => $body
-        ]);
+        ],$appName);
     }
 }
