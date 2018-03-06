@@ -70,7 +70,8 @@ class Pay {
         $successCallback  = $this->engine->config->get('mpesa.b2c.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.b2c.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.b2c.initiator_name');
-        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.b2c.security_credential');
+        $pass = $this->engine->config->get('mpesa.b2c.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential($pass);
         $commandId  = $this->engine->config->get('mpesa.b2c.default_command_id');
         
         // Params coming from the config file

@@ -53,8 +53,8 @@ class Balance {
         $timeoutCallback  = $this->engine->config->get('mpesa.account_balance.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.account_balance.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.account_balance.default_command_id');
-        
-        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.account_balance.security_credential');
+        $pass = $this->engine->config->get('mpesa.account_balance.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential($pass);
         // TODO: Compute
         $identifierType = '4';
 

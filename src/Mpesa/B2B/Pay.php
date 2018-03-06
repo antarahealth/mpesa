@@ -58,7 +58,8 @@ class Pay {
         $successCallback  = $this->engine->config->get('mpesa.b2b.result_url');
         $timeoutCallback  = $this->engine->config->get('mpesa.b2b.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.b2b.initiator_name');
-        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.b2b.security_credential');
+        $pass = $this->engine->config->get('mpesa.b2b.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential($pass);
         $commandId  = $this->engine->config->get('mpesa.b2b.default_command_id');
 
         // TODO: Compute. For now only support ShortCode

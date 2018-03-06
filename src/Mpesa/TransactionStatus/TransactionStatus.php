@@ -52,7 +52,8 @@ class TransactionStatus {
         $timeoutCallback  = $this->engine->config->get('mpesa.transaction_status.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.transaction_status.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.transaction_status.default_command_id');
-        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.transaction_status.security_credential');
+        $pass = $this->engine->config->get('mpesa.transaction_status.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential($pass);
         // TODO: Compute
         $identifierType = 4;
 

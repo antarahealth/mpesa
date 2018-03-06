@@ -54,7 +54,8 @@ class Reversal {
         $timeoutCallback  = $this->engine->config->get('mpesa.reversal.timeout_url');
         $initiator  = $this->engine->config->get('mpesa.reversal.initiator_name');
         $commandId  = $this->engine->config->get('mpesa.reversal.default_command_id');
-        $securityCredential  = $this->engine->computeSecurityCredential('mpesa.reversal.security_credential');
+        $pass = $this->engine->config->get('mpesa.reversal.security_credential');
+        $securityCredential  = $this->engine->computeSecurityCredential($pass);
         // TODO: Compute
         $identifierType = '4';
 
