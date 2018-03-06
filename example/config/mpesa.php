@@ -182,7 +182,7 @@ return [
 
         'default_command_id' => 'BusinessPayBill',
 
-        'security_credential' => 'oljNhHSgBGb/aPX//+mbeC2S/KhTh5Agmnzi/T5/aCaxXiGtuXRwFPBQ78iDA4Tzfcsz8ituD2AeP0gcOvF58wFSm4tXQTPnVZ1kvOOF91wuYx8jaS6Sa6lOgl6aXG1dA1ixht9sAWQHBs20sXwNzOoEfvrIdOpGDGhpZ8DQfwu6GY6AIEskeQoU7D67CM8ZmLzjaI6ZVSvSV9QctsWUeorLD2cPEI4zwDsPR59qz4H+BHMQdYqghaRuCiaXLsB97ruYvQYhUIqcWdMP7DVR4Vj7iIxfBTMYfMghmbvPAE2THhy8xuPAcaedtQn+2o8wNIncgKRB+QaPQiHAdLF+lg==',
+        'security_credential' => 'YAL2yKrn',
 
         'short_code' => '600256',
 
@@ -206,7 +206,7 @@ return [
     'account_balance' => [
         'initiator_name' => 'testapi0297',
 
-        'security_credential' => 'oljNhHSgBGb/aPX//+mbeC2S/KhTh5Agmnzi/T5/aCaxXiGtuXRwFPBQ78iDA4Tzfcsz8ituD2AeP0gcOvF58wFSm4tXQTPnVZ1kvOOF91wuYx8jaS6Sa6lOgl6aXG1dA1ixht9sAWQHBs20sXwNzOoEfvrIdOpGDGhpZ8DQfwu6GY6AIEskeQoU7D67CM8ZmLzjaI6ZVSvSV9QctsWUeorLD2cPEI4zwDsPR59qz4H+BHMQdYqghaRuCiaXLsB97ruYvQYhUIqcWdMP7DVR4Vj7iIxfBTMYfMghmbvPAE2THhy8xuPAcaedtQn+2o8wNIncgKRB+QaPQiHAdLF+lg==',
+        'security_credential' => 'YAL2yKrn',
 
         'default_command_id' => 'AccountBalance',
 
@@ -230,7 +230,7 @@ return [
     'transaction_status' => [
         'initiator_name' => 'testapi0297',
 
-        'security_credential' => 'oljNhHSgBGb/aPX//+mbeC2S/KhTh5Agmnzi/T5/aCaxXiGtuXRwFPBQ78iDA4Tzfcsz8ituD2AeP0gcOvF58wFSm4tXQTPnVZ1kvOOF91wuYx8jaS6Sa6lOgl6aXG1dA1ixht9sAWQHBs20sXwNzOoEfvrIdOpGDGhpZ8DQfwu6GY6AIEskeQoU7D67CM8ZmLzjaI6ZVSvSV9QctsWUeorLD2cPEI4zwDsPR59qz4H+BHMQdYqghaRuCiaXLsB97ruYvQYhUIqcWdMP7DVR4Vj7iIxfBTMYfMghmbvPAE2THhy8xuPAcaedtQn+2o8wNIncgKRB+QaPQiHAdLF+lg==',
+        'security_credential' => 'YAL2yKrn',
 
         'default_command_id' => 'TransactionStatusQuery',
 
@@ -254,7 +254,7 @@ return [
     'reversal' => [
         'initiator_name' => 'testapi0297',
 
-        'security_credential' => 'oljNhHSgBGb/aPX//+mbeC2S/KhTh5Agmnzi/T5/aCaxXiGtuXRwFPBQ78iDA4Tzfcsz8ituD2AeP0gcOvF58wFSm4tXQTPnVZ1kvOOF91wuYx8jaS6Sa6lOgl6aXG1dA1ixht9sAWQHBs20sXwNzOoEfvrIdOpGDGhpZ8DQfwu6GY6AIEskeQoU7D67CM8ZmLzjaI6ZVSvSV9QctsWUeorLD2cPEI4zwDsPR59qz4H+BHMQdYqghaRuCiaXLsB97ruYvQYhUIqcWdMP7DVR4Vj7iIxfBTMYfMghmbvPAE2THhy8xuPAcaedtQn+2o8wNIncgKRB+QaPQiHAdLF+lg==',
+        'security_credential' => 'YAL2yKrn',
 
         'default_command_id' => 'TransactionReversal',
 
