@@ -4,7 +4,9 @@
 [![Latest Unstable Version](https://poser.pugx.org/kabangi/mpesa/v/unstable.svg)](https://packagist.org/packages/kabangi/mpesa)
 [![License](https://poser.pugx.org/kabangi/mpesa/license.svg)](https://packagist.org/packages/kabangi/mpesa)
 
-This is a PHP package with first class support to laravel for the Safaricom's M-Pesa REST API dubbed DARAJA API.  
+This is a PHP package for the Safaricom's M-Pesa REST API dubbed DARAJA API.  
+
+If you are looking for a laravel implementation do check the following repo [Laravel Implementation] (https://github.com/Kabangi/mpesalaravel)
 
 It implements all the exposed endpoints by Safaricom as listed below:-
 
