@@ -6,7 +6,7 @@
 
 This is a PHP package for the Safaricom's M-Pesa REST API dubbed DARAJA API.  
 
-If you are looking for a laravel implementation do check the following repo [!Laravel Implementation(https://github.com/Kabangi/mpesalaravel)
+If you are looking for a laravel implementation do check the following repo [!Laravel Implementation](https://github.com/Kabangi/mpesalaravel)
 
 It implements all the exposed endpoints by Safaricom as listed below:-
 
