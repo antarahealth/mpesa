@@ -92,43 +92,19 @@ use Kabangi\Mpesa\Init as Mpesa;
 
 ## Configuration
 
-### Raw PHP (Vanilla)
+The library comes with a structured config file based on the API that you intend to use.
 
-If you followed the installation details you should have a config directory and `mpesa.php` file. 
+To add the necessary configurations:-
+1. Open the folder installation.
 
-Modify the config file where necessary to include your credentials
+2. Look for a file named `config/mpesa.php`
+
+3. Edit the necessary keys that reflects the product you are using.
+
 
 ## Usage
 
 ### Raw PHP (Vanilla) without composer
-
-```
-<?php
-require "vendor/autoload.php";
-
-use Kabangi\Mpesa\Native\Mpesa;
-
-$mpesa = new Mpesa();
-
-$response = $mpesa->STKPush([]);
-header('Content-Type: application/json');
-echo json_encode($response);
-
-// $mpesa->STKStatus([]);
-
-// $mpesa->C2BRegister([]);
-
-// $mpesa->C2BSimulate([]);
-
-// $mpesa->B2C([]);
-
-// $mpesa->accountBalance([]);
-
-// $mpesa->reversal([]);
-
-// $mpesa->transactionStatus([]);
-
-```
 
 ## Inspiration
 
