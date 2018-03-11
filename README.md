@@ -58,19 +58,10 @@ This endpoint enables merchants to query their Till/Paybill numbers account bala
 
 ## Installation
 
-This project is distributed via composer package manager and should be installed as one of your project's dependencies:
+This project supports both composer dependency management tool and can also be used without composer
 
-### Laravel
-1. Pull the package using the command below:-
-```
-composer require kabangi/mpesa
-```
-2. Make sure `config/app.php` under `providers` array the following line exists
+### Using Composer
 
-`Kabangi\Mpesa\Laravel\ServiceProvider::class,`
-If not add it
-
-### Raw PHP (Vanilla)
 1. Modify your `composer.json` file to include:
 
 ```json
@@ -84,17 +75,20 @@ If not add it
 ```
 composer require kabangi/mpesa
 ```
+### Without composer
 
+1. Download the source code as zipped 
+
+2. Follow the following directions
+``` 
+<?php
+require "{PATHTOTHISLIBFOLDER}/src/autoload.php";
+
+use Kabangi\Mpesa\Init as Mpesa;
+```
+3. Check the following example for usage https://github.com/Kabangi/mpesa/blob/master/example/mpesa.php
 
 ## Configuration
-
-### Laravel
-
-Publish the package config file by running the following command:
-   `php artisan vendor:publish`
-This will add `mpesa.php` config file into config directory. 
-
-Edit the file with the necessary values if you do not do this we will use the sandbox credentials automagically.
 
 ### Raw PHP (Vanilla)
 
@@ -104,7 +98,8 @@ Modify the config file where necessary to include your credentials
 
 ## Usage
 
-### Raw PHP (Vanilla)
+### Raw PHP (Vanilla) without composer
+
 ```
 <?php
 require "vendor/autoload.php";
