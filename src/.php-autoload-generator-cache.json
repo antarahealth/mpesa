@@ -1,8 +1,8 @@
 {
     "files": {
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/AccountBalance/Balance.php": {
-            "fileSize": 3283,
-            "lastModified": 1515274830,
+            "fileSize": 2840,
+            "lastModified": 1520323818,
             "classes": [
                 "Kabangi\\Mpesa\\AccountBalance\\Balance"
             ],
@@ -10,8 +10,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Auth/Authenticator.php": {
-            "fileSize": 3023,
-            "lastModified": 1515274921,
+            "fileSize": 3387,
+            "lastModified": 1520324072,
             "classes": [
                 "Kabangi\\Mpesa\\Auth\\Authenticator"
             ],
@@ -19,8 +19,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/B2B/Pay.php": {
-            "fileSize": 3559,
-            "lastModified": 1515275144,
+            "fileSize": 3324,
+            "lastModified": 1520323795,
             "classes": [
                 "Kabangi\\Mpesa\\B2B\\Pay"
             ],
@@ -28,8 +28,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/B2C/Pay.php": {
-            "fileSize": 3326,
-            "lastModified": 1515275424,
+            "fileSize": 3332,
+            "lastModified": 1520324125,
             "classes": [
                 "Kabangi\\Mpesa\\B2C\\Pay"
             ],
@@ -37,8 +37,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/C2B/Register.php": {
-            "fileSize": 2590,
-            "lastModified": 1515275562,
+            "fileSize": 2234,
+            "lastModified": 1520324151,
             "classes": [
                 "Kabangi\\Mpesa\\C2B\\Register"
             ],
@@ -46,8 +46,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/C2B/Simulate.php": {
-            "fileSize": 2553,
-            "lastModified": 1515275632,
+            "fileSize": 2186,
+            "lastModified": 1520324139,
             "classes": [
                 "Kabangi\\Mpesa\\C2B\\Simulate"
             ],
@@ -82,8 +82,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Engine/Core.php": {
-            "fileSize": 4087,
-            "lastModified": 1515274653,
+            "fileSize": 5616,
+            "lastModified": 1520323591,
             "classes": [
                 "Kabangi\\Mpesa\\Engine\\Core"
             ],
@@ -91,8 +91,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Engine/MpesaTrait.php": {
-            "fileSize": 1620,
-            "lastModified": 1514435724,
+            "fileSize": 1881,
+            "lastModified": 1520327313,
             "classes": [
                 "Kabangi\\Mpesa\\Engine\\MpesaTrait"
             ],
@@ -100,8 +100,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Exceptions/ConfigurationException.php": {
-            "fileSize": 111,
-            "lastModified": 1514189183,
+            "fileSize": 115,
+            "lastModified": 1519898187,
             "classes": [
                 "Kabangi\\Mpesa\\Exceptions\\ConfigurationException"
             ],
@@ -109,8 +109,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Exceptions/ErrorException.php": {
-            "fileSize": 103,
-            "lastModified": 1514189183,
+            "fileSize": 107,
+            "lastModified": 1519899286,
             "classes": [
                 "Kabangi\\Mpesa\\Exceptions\\ErrorException"
             ],
@@ -118,8 +118,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/LipaNaMpesaOnline/STKPush.php": {
-            "fileSize": 3180,
-            "lastModified": 1515275780,
+            "fileSize": 2859,
+            "lastModified": 1520324170,
             "classes": [
                 "Kabangi\\Mpesa\\LipaNaMpesaOnline\\STKPush"
             ],
@@ -127,8 +127,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/LipaNaMpesaOnline/STKStatusQuery.php": {
-            "fileSize": 2182,
-            "lastModified": 1515275928,
+            "fileSize": 1853,
+            "lastModified": 1520324197,
             "classes": [
                 "Kabangi\\Mpesa\\LipaNaMpesaOnline\\STKStatusQuery"
             ],
@@ -163,8 +163,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Packagist/Installer.php": {
-            "fileSize": 1095,
-            "lastModified": 1514366757,
+            "fileSize": 1093,
+            "lastModified": 1520188637,
             "classes": [
                 "Kabangi\\Mpesa\\Support\\Installer"
             ],
@@ -172,8 +172,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Reversal/Reversal.php": {
-            "fileSize": 3223,
-            "lastModified": 1515276039,
+            "fileSize": 2921,
+            "lastModified": 1520324208,
             "classes": [
                 "Kabangi\\Mpesa\\Reversal\\Reversal"
             ],
@@ -181,8 +181,8 @@
             "constants": []
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/TransactionStatus/TransactionStatus.php": {
-            "fileSize": 3316,
-            "lastModified": 1515276088,
+            "fileSize": 3011,
+            "lastModified": 1520324219,
             "classes": [
                 "Kabangi\\Mpesa\\TransactionStatus\\TransactionStatus"
             ],
@@ -191,7 +191,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/DataWrapper/ArrayWrapper.php": {
             "fileSize": 1104,
-            "lastModified": 1515273082,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\DataWrapper\\ArrayWrapper"
             ],
@@ -200,7 +200,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/DataWrapper/WrapperInterface.php": {
             "fileSize": 412,
-            "lastModified": 1515273157,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\DataWrapper\\WrapperInterface"
             ],
@@ -209,7 +209,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/ErrorMessage.php": {
             "fileSize": 1151,
-            "lastModified": 1515273072,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\ErrorMessage"
             ],
@@ -218,7 +218,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Helper.php": {
             "fileSize": 7618,
-            "lastModified": 1515273068,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Helper"
             ],
@@ -227,7 +227,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/AbstractRule.php": {
             "fileSize": 11999,
-            "lastModified": 1515273122,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\AbstractRule"
             ],
@@ -236,7 +236,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/AbstractStringRule.php": {
             "fileSize": 468,
-            "lastModified": 1515273167,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\AbstractStringRule"
             ],
@@ -245,7 +245,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Alpha.php": {
             "fileSize": 432,
-            "lastModified": 1515273163,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Alpha"
             ],
@@ -254,7 +254,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/AlphaNumHyphen.php": {
             "fileSize": 704,
-            "lastModified": 1515273111,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\AlphaNumHyphen"
             ],
@@ -263,7 +263,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/AlphaNumeric.php": {
             "fileSize": 464,
-            "lastModified": 1515273169,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\AlphaNumeric"
             ],
@@ -272,7 +272,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/ArrayLength.php": {
             "fileSize": 1097,
-            "lastModified": 1515273123,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\ArrayLength"
             ],
@@ -281,7 +281,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/ArrayMaxLength.php": {
             "fileSize": 716,
-            "lastModified": 1515273105,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\ArrayMaxLength"
             ],
@@ -290,7 +290,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/ArrayMinLength.php": {
             "fileSize": 718,
-            "lastModified": 1515273094,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\ArrayMinLength"
             ],
@@ -299,7 +299,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Between.php": {
             "fileSize": 1058,
-            "lastModified": 1515273108,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Between"
             ],
@@ -308,7 +308,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Callback.php": {
             "fileSize": 2188,
-            "lastModified": 1515273119,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Callback"
             ],
@@ -317,7 +317,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Date.php": {
             "fileSize": 1135,
-            "lastModified": 1515273106,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Date"
             ],
@@ -326,7 +326,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/DateTime.php": {
             "fileSize": 312,
-            "lastModified": 1515273154,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\DateTime"
             ],
@@ -335,7 +335,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Email.php": {
             "fileSize": 448,
-            "lastModified": 1515273152,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Email"
             ],
@@ -344,7 +344,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/EmailDomain.php": {
             "fileSize": 570,
-            "lastModified": 1515273083,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\EmailDomain"
             ],
@@ -353,7 +353,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Equal.php": {
             "fileSize": 655,
-            "lastModified": 1515273089,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Equal"
             ],
@@ -362,7 +362,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/Extension.php": {
             "fileSize": 1761,
-            "lastModified": 1515273131,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\Extension"
             ],
@@ -371,7 +371,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/Image.php": {
             "fileSize": 2031,
-            "lastModified": 1515273133,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\Image"
             ],
@@ -380,7 +380,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/ImageHeight.php": {
             "fileSize": 1009,
-            "lastModified": 1515273129,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\ImageHeight"
             ],
@@ -389,7 +389,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/ImageRatio.php": {
             "fileSize": 1648,
-            "lastModified": 1515273127,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\ImageRatio"
             ],
@@ -398,7 +398,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/ImageWidth.php": {
             "fileSize": 1007,
-            "lastModified": 1515273132,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\ImageWidth"
             ],
@@ -407,7 +407,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/File/Size.php": {
             "fileSize": 1339,
-            "lastModified": 1515273125,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\File\\Size"
             ],
@@ -416,7 +416,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/FullName.php": {
             "fileSize": 843,
-            "lastModified": 1515273113,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\FullName"
             ],
@@ -425,7 +425,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/GreaterThan.php": {
             "fileSize": 937,
-            "lastModified": 1515273120,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\GreaterThan"
             ],
@@ -434,7 +434,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/InList.php": {
             "fileSize": 728,
-            "lastModified": 1515273078,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\InList"
             ],
@@ -443,7 +443,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Integer.php": {
             "fileSize": 452,
-            "lastModified": 1515273155,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Integer"
             ],
@@ -452,7 +452,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/IpAddress.php": {
             "fileSize": 756,
-            "lastModified": 1515273099,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\IpAddress"
             ],
@@ -461,7 +461,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Length.php": {
             "fileSize": 1164,
-            "lastModified": 1515273117,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Length"
             ],
@@ -470,7 +470,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/LessThan.php": {
             "fileSize": 928,
-            "lastModified": 1515273077,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\LessThan"
             ],
@@ -479,7 +479,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Match.php": {
             "fileSize": 676,
-            "lastModified": 1515273116,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Match"
             ],
@@ -488,7 +488,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/MaxLength.php": {
             "fileSize": 798,
-            "lastModified": 1515273090,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\MaxLength"
             ],
@@ -497,7 +497,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/MinLength.php": {
             "fileSize": 796,
-            "lastModified": 1515273097,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\MinLength"
             ],
@@ -506,7 +506,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/NotInList.php": {
             "fileSize": 720,
-            "lastModified": 1515273095,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\NotInList"
             ],
@@ -515,7 +515,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/NotRegex.php": {
             "fileSize": 457,
-            "lastModified": 1515273170,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\NotRegex"
             ],
@@ -524,7 +524,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Number.php": {
             "fileSize": 435,
-            "lastModified": 1515273158,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Number"
             ],
@@ -533,7 +533,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Regex.php": {
             "fileSize": 706,
-            "lastModified": 1515273087,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Regex"
             ],
@@ -542,7 +542,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Required.php": {
             "fileSize": 386,
-            "lastModified": 1515273172,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Required"
             ],
@@ -551,7 +551,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/RequiredWhen.php": {
             "fileSize": 2353,
-            "lastModified": 1515273092,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\RequiredWhen"
             ],
@@ -560,7 +560,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/RequiredWith.php": {
             "fileSize": 882,
-            "lastModified": 1515273114,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\RequiredWith"
             ],
@@ -569,7 +569,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/RequiredWithout.php": {
             "fileSize": 885,
-            "lastModified": 1515273109,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\RequiredWithout"
             ],
@@ -578,7 +578,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Time.php": {
             "fileSize": 302,
-            "lastModified": 1515273160,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Time"
             ],
@@ -587,7 +587,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/Extension.php": {
             "fileSize": 1931,
-            "lastModified": 1515273149,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\Extension"
             ],
@@ -596,7 +596,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/Image.php": {
             "fileSize": 2197,
-            "lastModified": 1515273148,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\Image"
             ],
@@ -605,7 +605,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/ImageHeight.php": {
             "fileSize": 1176,
-            "lastModified": 1515273137,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\ImageHeight"
             ],
@@ -614,7 +614,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/ImageRatio.php": {
             "fileSize": 1814,
-            "lastModified": 1515273136,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\ImageRatio"
             ],
@@ -623,7 +623,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/ImageWidth.php": {
             "fileSize": 1173,
-            "lastModified": 1515273140,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\ImageWidth"
             ],
@@ -632,7 +632,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/Required.php": {
             "fileSize": 714,
-            "lastModified": 1515273145,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\Required"
             ],
@@ -641,7 +641,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Upload/Size.php": {
             "fileSize": 1505,
-            "lastModified": 1515273134,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Upload\\Size"
             ],
@@ -650,7 +650,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Url.php": {
             "fileSize": 434,
-            "lastModified": 1515273165,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Url"
             ],
@@ -659,7 +659,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Rule/Website.php": {
             "fileSize": 733,
-            "lastModified": 1515273085,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Rule\\Website"
             ],
@@ -668,7 +668,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/RuleCollection.php": {
             "fileSize": 747,
-            "lastModified": 1515273066,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\RuleCollection"
             ],
@@ -677,7 +677,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/RuleFactory.php": {
             "fileSize": 7169,
-            "lastModified": 1515273057,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\RuleFactory"
             ],
@@ -686,7 +686,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Util/Arr.php": {
             "fileSize": 4896,
-            "lastModified": 1515273073,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Util\\Arr"
             ],
@@ -695,7 +695,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/Validator.php": {
             "fileSize": 11687,
-            "lastModified": 1515273059,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\Validator"
             ],
@@ -704,7 +704,7 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/ValidatorInterface.php": {
             "fileSize": 303,
-            "lastModified": 1515273150,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\ValidatorInterface"
             ],
@@ -713,10 +713,71 @@
         },
         "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Validation/ValueValidator.php": {
             "fileSize": 8006,
-            "lastModified": 1515273075,
+            "lastModified": 1515470679,
             "classes": [
                 "Kabangi\\Mpesa\\Validation\\ValueValidator"
             ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Contracts/HttpRequest.php": {
+            "fileSize": 377,
+            "lastModified": 1520310445,
+            "classes": [
+                "Kabangi\\Mpesa\\Contracts\\HttpRequest"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Engine/Cache.php": {
+            "fileSize": 2758,
+            "lastModified": 1520188637,
+            "classes": [
+                "Kabangi\\Mpesa\\Engine\\Cache"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Engine/Config.php": {
+            "fileSize": 4277,
+            "lastModified": 1520188637,
+            "classes": [
+                "Kabangi\\Mpesa\\Engine\\Config"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Engine/CurlRequest.php": {
+            "fileSize": 734,
+            "lastModified": 1520310445,
+            "classes": [
+                "Kabangi\\Mpesa\\Engine\\CurlRequest"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Exceptions/MpesaException.php": {
+            "fileSize": 107,
+            "lastModified": 1519904040,
+            "classes": [
+                "Kabangi\\Mpesa\\Exceptions\\MpesaException"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/Mpesa/Init.php": {
+            "fileSize": 762,
+            "lastModified": 1520189559,
+            "classes": [
+                "Kabangi\\Mpesa\\Init"
+            ],
+            "functions": [],
+            "constants": []
+        },
+        "/Applications/XAMPP/xamppfiles/htdocs/connecthealth/mpesa/mpesa/src/config/mpesa.php": {
+            "fileSize": 7531,
+            "lastModified": 1520323095,
+            "classes": [],
             "functions": [],
             "constants": []
         }
