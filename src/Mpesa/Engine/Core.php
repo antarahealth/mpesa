@@ -129,6 +129,7 @@ class Core
      * @return 
      */
     public function getCurrentRequestTime(){
+        date_default_timezone_set('UTC');
         $date = new \DateTime();
         return $date->format('YmdHis');
     }
