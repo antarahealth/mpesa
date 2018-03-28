@@ -64,6 +64,13 @@ use Kabangi\Mpesa\Init as Mpesa;
 
 $mpesa = new Mpesa();
 try {
+
+    $response = $mpesa->STKPush([
+        'amount' => 10,
+        'transactionDesc' => '',
+        'phoneNumber' => '',
+    ]);
+    
     $response = $mpesa->B2C([
         'amount' => 10,
         'accountReference' => '12',
