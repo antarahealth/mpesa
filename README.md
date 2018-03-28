@@ -13,17 +13,7 @@ If you are looking for a laravel implementation do check the following repo [Lar
 This project supports both composer dependency management tool and can also be used without composer
 
 ### Using Composer
-
-1. Modify your `composer.json` file to include:
-
-```json
-  "scripts": {
-        "post-update-cmd": [
-            "Kabangi\\Mpesa\\Support\\Installer::install"
-        ]
-  },
-```
-2. Run the following command
+1. Run the following command
 ```
 composer require kabangi/mpesa
 ```
