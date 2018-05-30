@@ -19,18 +19,24 @@ try {
 
 
     // $mpesa->STKStatus([]);
-
+    
     // $mpesa->C2BRegister([]);
-
+    
+    // $mpesa->STKPush([]);
+    
     // $mpesa->C2BSimulate([]);
-
-
-
-    // $mpesa->accountBalance([]);
-
+    
+    // $mpesa->B2C([])
+    
+    // $mpesa->B2B([]);
+    
+    // $mpesa->accountBalance([])
+    
     // $mpesa->reversal([]);
-
+    
     // $mpesa->transactionStatus([]);
+    
+    // $mpesa->reversal([]);
 }catch(\Exception $e){
     $response = json_decode($e->getMessage());
 }
