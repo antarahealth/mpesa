@@ -97,6 +97,11 @@ try {
 header('Content-Type: application/json');
 echo json_encode($response);
 ```
+## Support
+Need support using this package:- 
+[Send a quick message here](https://t.me/kabangi)
+
+https://t.me/kabangi
 
 ## API's Supported
 The library implements all the exposed endpoints by Safaricom as listed below:-
@@ -157,11 +162,8 @@ https://github.com/SmoDav/mpesa
 ## Contributors
 Gratitudes goes to the following Ninjas for their help during my integration process and the things I had to learn along the way fom them or their code:-
 
-| [<img src="https://avatars1.githubusercontent.com/u/8632600?s=400&u=24e47804b187e651c75c3defc65930ef4e719b79&v=4" width="100px;"/><br /><sub>Julius Kabangi</sub>](mailto::kabangijulius@gmail.com/)
+[<img src="https://avatars1.githubusercontent.com/u/8632600?s=400&u=24e47804b187e651c75c3defc65930ef4e719b79&v=4" width="100px;"/><br /><sub>Julius Kabangi</sub>](mailto::kabangijulius@gmail.com/)
 
-## Support
-Need support using this package:- 
-[Send a quick message here](https://join.slack.com/t/m-pesagroup/shared_invite/enQtMjkxNjczNzQyMTc4LTFjYjE5MDIxMzJjZDUyMDAzY2RmZjlhNDI3OGY1MWVhYTFkM2YzMmI2NjQ0NGM3M2EwMGVjM2E4NGU4MmIxYjA)
 
 ## License
 
