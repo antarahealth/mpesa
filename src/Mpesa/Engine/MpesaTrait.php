@@ -30,7 +30,7 @@ trait MpesaTrait{
 
     public function C2BSimulate($params = [],$appName='default'){
         $simulate = new Simulate($this->engine);
-        return $simulate->submit([],$appName);
+        return $simulate->submit($params,$appName);
     }
 
     public function B2C($params = [],$appName='default'){
